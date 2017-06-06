@@ -1,0 +1,118 @@
+﻿@model BlackSys.Models.Leave
+@using BlackSys
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    CommonRepository commonRepository = new CommonRepository();
+    BlackSysEntities db = new BlackSysEntities();
+
+    var userId = User.Identity.GetUserId();
+    var branchId = db.AspNetUsers.Where(u => u.Id == userId).Select(p => p.BranchId).FirstOrDefault();
+    ViewBag.Braches = commonRepository.GetBranchList(userId);
+    ViewBag.EmpList = db.Employees.Where(x => x.BranchID == branchId).Select(x => new { x.EmpID, x.EmpName}).ToList();
+}
+
+<div class="row">
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-pin font-green"></i>
+                <span class="caption-subject bold uppercase">Creating new Leave</span>
+            </div>
+            <div class="actions">               
+                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+@using (Html.BeginForm("Create", "Leave", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-body">
+        @Html.ValidationSummary(true)
+		<div class="form-group  margin-top-20">
+        <div class="form-group">
+            @Html.LabelFor(model => model.BranchID, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+               @Html.DropDownListFor(model => model.BranchID, new System.Web.Mvc.SelectList(ViewBag.Braches, "BranchID", "BranchName"), new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.BranchID)*@
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeID, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+               @Html.DropDownListFor(model => model.EmployeeID, new System.Web.Mvc.SelectList(ViewBag.EmpList, "EmpID", "EmpName"), "Select Employee", new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.EmployeeID)*@
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.LeaveType, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+               @Html.DropDownListFor(model => model.LeaveType, new System.Web.Mvc.SelectList(ViewBag.LeaveType, "LeaveTypeId", "ShortCode"), "Select LeaveType Code", new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.LeaveType)*@
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalDays, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.TotalDays, new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.TotalDays)*@
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.FromDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.FromDate, new { type="date", @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.FromDate)*@
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ToDate, new { type = "date", @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.ToDate)*@
+            </div>
+        </div>
+	
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-10">
+						 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" }) 
+						<input type="submit" value="Create" class="btn btn-success" />
+						</div>
+				</div>
+			</div>
+    </div>
+	</div>
+}
+
+
+            
+    </div>
+</div>
+</div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#FromDate").val(Get2Date());
+        $("#ToDate").val(Get2Date());
+    });
+
+    </script>
+}

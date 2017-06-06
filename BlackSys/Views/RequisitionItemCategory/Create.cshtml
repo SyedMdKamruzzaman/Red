@@ -1,0 +1,57 @@
+﻿@model BlackSys.Models.RequisitionItemCategoryModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Product Category Create</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-body">
+
+                        @Html.ValidationSummary()
+                        <div class="form-group  margin-top-20">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.Category, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Category)
+                                </div>
+                            </div>
+                            <div class="clearfix margin-top-20"></div>
+                            <div class="form-actions">
+
+                                    <div class="col-md-offset-2 col-md-5">
+                                        
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                        <a href="/Product/Create" class="btn socicon-btn-circle btn-success btn-group-sm">
+                                            <i class="fa fa-arrow-left"></i> Back To Product
+                                        </a>
+                                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

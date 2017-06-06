@@ -1,0 +1,240 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.Employee
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<h3 class="page-title">
+    Employee Area
+    <small> Update Employee Details</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Edit Employee Details</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+
+                @using (Html.BeginForm("Edit", "Employee", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-body">                        
+
+                        @Html.ValidationSummary("", new { @class = "text-error" })
+                        @Html.HiddenFor(model => model.EmpID)
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.BranchID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.BranchID, new System.Web.Mvc.SelectList(ViewBag.Braches, "BranchID", "BranchName"), "Select Branch", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.BranchID)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.EmployeeId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.EmployeeId, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.EmpCode)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.IDInMachine, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.IDInMachine, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.IDInMachine)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.EmpName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.EmpName, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.EmpName)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.ResAddress, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ResAddress, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.ResAddress)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.EmpMobileNo, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.EmpMobileNo, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.EmpMobileNo)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.EmpEmail, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.EmpEmail, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.EmpEmail)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.JoiningDate, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.JoiningDate, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.JoiningDate)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.BirthDate)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.FathersName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.FathersName, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.FathersName)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.MothersName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MothersName, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.MothersName)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.Religion, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownList("Religion", new SelectList(Enum.GetValues(typeof(BlackSys.Models.Religionlist))), "Select Religion", new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.MaritalStatus, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownList("MaritalStatus", new SelectList(Enum.GetValues(typeof(BlackSys.Models.MaritalStatuslist))), "Select Marital Status", new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.Nationality, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Nationality, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.NationalIDNo, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.NationalIDNo, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.Sex, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownList("Sex", new SelectList(Enum.GetValues(typeof(BlackSys.Models.Sexlist))), "Select Gender", new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.BloodGroup, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownList("BloodGroup", new SelectList(Enum.GetValues(typeof(BlackSys.Models.BloodGrouplist))), "Select Blood Group", new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.DeptID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.DeptID, new System.Web.Mvc.SelectList(ViewBag.Depart, "DeptID", "DepartmentName"), "Select Department", new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.ResignationDate, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ResignationDate, new { @class = "form-control", type="Date" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            @if (Model.Files.Any(f => f.FileType == BlackSys.Models.FileType.Avatar))
+                            {
+                                    <div class="form-group form-md-line-input has-info">
+                                    <span class="control-label col-md-2"><strong>Current Avatar</strong></span>
+                                    <div class="col-md-4">
+                                        <img src="~/File?id=@Model.Files.First(f => f.FileType == BlackSys.Models.FileType.Avatar).FileId" alt="avatar" />
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <input type="file" id="Avatar" name="upload" />
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

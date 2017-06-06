@@ -1,0 +1,81 @@
+﻿@model BlackSys.Models.StockOutModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>StockOutModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.categoryid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoryid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.productid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.productid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stockoutdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stockoutdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.branchid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.branchid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.depid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.depid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.empid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.empid)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

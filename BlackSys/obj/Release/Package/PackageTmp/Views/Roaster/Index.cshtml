@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BlackSys.Models.Roaster>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BranchID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShiftCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoasterDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BranchID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShiftCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoasterDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RoasterId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RoasterId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RoasterId })
+        </td>
+    </tr>
+}
+
+</table>

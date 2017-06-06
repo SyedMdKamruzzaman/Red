@@ -1,0 +1,147 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.ViewModels.FeedbackViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">
+    Feedback from Customer
+    <small> Create Feedback</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Feedback New</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                    <div class="inputs pull-right">
+                        <a href="/FeedbackQuestions/Create" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                            <i class="fa fa-plus-circle"></i> Setup Feedback Question
+                        </a>
+                        <a href="/FeedbackRatingPoints/Create" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                            <i class="fa fa-plus-circle"></i> Setup Feedback Rating
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body form">
+
+                @using (Html.BeginForm("Create", "Feedback", null, FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Feedback" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-body">
+
+                        @Html.ValidationSummary("", new { @class = "text-error" })
+
+                        <div class="form-group  margin-top-20">
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.OrderId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.OrderId, new { @class = "form-control" })
+                                        @*@Html.ValidationMessageFor(model => model.Appointments.FullName)*@
+
+                                        <span class="input-group-btn" style="width:0;padding-left:10px">
+                                            <button type="button" id="btnLoadBeautician" class="btn btn-warning">Load Beautician</button>
+                                        </span>
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>                              
+                            </div>
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.BeauticianId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                   @Html.DropDownListFor(model => model.BeauticianId, new System.Web.Mvc.SelectList(ViewBag.BeauticianId, "EmpID", "EmpName"), "Select Beautician", new { @class = "form-control" })
+                                    @*@Html.TextBoxFor(model => model.BeauticianId)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-md-line-input has-info" style="margin-left:16%">
+                                @for (int i = 0; i < Model.feedbackQuestionsList.Count; i++)
+                                {
+
+                                    @Html.HiddenFor(m => m.feedbackQuestionsList[i].Id)  // for binding
+                                      @Html.DisplayFor(m => m.feedbackQuestionsList[i].Questions)
+                                     <br />
+                                    <br />
+                                    foreach (var answer in Model.feedbackQuestionsList[i].PossibleAnswers)
+                                    {
+                                        @Html.RadioButtonFor(m => m.feedbackQuestionsList[i].SelectedAnswer, @answer.Id, new { @id = answer.Id , @class = "icheck" })
+                                        <label for="@answer.Id">@answer.Name</label>
+
+                                    }
+                                    <br />
+                                    <br />
+                                }
+                                <br />
+                                </div>
+                                @*@Html.RadioButtonFor(m => m.feedbackQuestionsList[i].SelectedAnswer, answer.Id, new { @id = answer.Id, @class = "icheck" })
+            <label for="@answer.Id">@answer.Name</label>*@
+                                <div class="form-group form-md-line-input has-info">
+                                    @Html.LabelFor(model => model.Comments, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-4">
+                                        @Html.EditorFor(model => model.Comments, new {@class="form-Control", type="TextArea"})
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-2 col-md-5">
+                                            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                            <input type="submit" class="btn btn-primary" value="Save" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#btnLoadBeautician').click(function () {
+                 
+            var orderId = $('#OrderId').val();
+           
+            $.ajax({
+                url: '/Feedback/GetBeauticianByOrderId/',
+                type: 'GET',
+                data: { 'orderId': orderId },
+                success: function (data) {
+
+                    $("#BeauticianId").empty();
+                    var listItems= "<option value='' selected='true'>Select Beautician</option>";
+                   
+                    for (var j = 0; j < data.length; j++) {
+                        listItems += "<option ";
+                        listItems += " value='" + data[j].EmpID + "'>" + data[j].EmpName + "</option>";                        
+                    }                    
+
+                    $("#BeauticianId").append(listItems);
+
+                }
+
+
+            });
+     });
+
+    });
+
+</script>
+}

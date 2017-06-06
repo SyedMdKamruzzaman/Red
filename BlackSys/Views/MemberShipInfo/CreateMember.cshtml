@@ -1,0 +1,211 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.MembershipInfo
+
+@{
+    ViewBag.Title = "Create MemberShipCard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">
+    Card Area
+    <small> Create Membership Card Type for Customer</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("CreateMember", "MemberShipInfo", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create MemberShipCard" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary("", new { @class = "text-error" })
+
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemberName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MemberName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MemberName)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemMobileNo, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MemMobileNo, new { @class = "form-control", maxlength = "11" })
+                                   
+                                    @*<input type="type" name="name" value="" maxlength="" />*@
+                                    @Html.ValidationMessageFor(model => model.MemMobileNo)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemEmail, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MemEmail, new { @class = "form-control" })
+                                   @*@Html.ValidationMessageFor(model => model.MemEmail)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.BirthDate, "{0:dd-MMM-yyyy}", new { type = "date", @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.MemEmail)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AnniversaryDate, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.AnniversaryDate, "{0:dd-MMM-yyyy}", new { type = "date", @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.AnniversaryDate)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.Address)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CardId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.CardId, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CardId)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CardTypeId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.CardTypeId, new SelectList(ViewBag.CardType, "Id", "Type"),"Select Card Type", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CardType)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Discount, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", readOnly = "readonly" })
+                                    @*@Html.ValidationMessageFor(model => model.Discount)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemberSourceId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.MemberSourceId, new SelectList(ViewBag.MemberSource, "Id", "Name"), "Select Member Source", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.CardType)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                           
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" id="btnSubmit" />
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                @Html.LabelFor(model => model.TotalPointAchieved, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.TotalPointAchieved, new { @class = "form-control" })
+                                   
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>*@
+
+                        </div>
+                 
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $("#CardTypeId").change(function () {
+
+            var CardTypeId = $("#CardTypeId").val();
+            var data = {CardTypeId:CardTypeId}
+
+           $.getJSON("/MembershipInfo/GetDiscountByCardId/",data, function (result) {
+
+                $("#Discount").val(result);
+            });
+        });
+       
+        $(document).ready(function () {
+            $("#BirthDate").val(Get2Date());
+            $("#AnniversaryDate").val(Get2Date());
+
+            $("#btnSubmit").click(function () {
+                if ($("#MemberName").val() == "") {
+                    alert("Please Enter Member Name");
+                    $("#MemberName").focus();
+                    return false;
+                }
+
+                if ($("#MemMobileNo").val() == "") {
+                    alert("Please Enter Valid Mobile Number");
+                    $("#MemMobileNo").focus();
+                    return false;
+                }
+
+                if ($("#MemMobileNo").val().length > 11 ) {
+                    alert("Please Enter 11 Digit Mobile Number");
+                    $("#MemMobileNo").focus();
+                    return false;
+                }
+
+               
+
+                //if ($("#MemberSourceId".val() == "" || "#MemberSourceId".val() == 'NULL')) {
+                //    alert("Please Select Memeber Source");
+                //    return false;
+                //}
+
+            });
+
+        });
+
+
+
+
+
+</script>
+
+}

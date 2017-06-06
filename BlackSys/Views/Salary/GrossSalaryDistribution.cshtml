@@ -1,0 +1,111 @@
+﻿@model BlackSys.Models.ViewModels.EmpGrossSalViewModel
+    @{
+    ViewBag.Title = "GrossSalaryDistribution";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GrossSalaryDistribution</h2>
+
+<h3 class="page-title">
+    Gross Salary Distribution
+    <small> - Distribution of gross salary</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-user"></i>Feedback List
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                </div>
+                <div class="actions">
+                    <div class="inputs pull-right">
+                        <a href="/Feedback/Create" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                            <i class="fa fa-plus-circle"></i> Distribute Gross Salary
+                        </a>
+                    </div>                 
+                </div>
+            </div>
+            <div class="portlet-body">
+
+@using (Html.BeginForm("DistributeGrossSalary", "Salary", FormMethod.Post))
+                            {
+      @Html.AntiForgeryToken()
+                <table id="sys-table" cellspacing="0">
+                    
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="chkAll" />
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.GrossSalary)
+                            </th>
+                            
+                        </tr>
+                   
+                    @{
+                        int j =0;
+                    foreach (var item in Model.EmpGrossSalListViewModel)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(a => a.EmpGrossSalListViewModel[j].selected)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(a => a.EmpGrossSalListViewModel[j].EmployeeId, new { @readonly = "readonly", Style="border:0px" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(a => a.EmpGrossSalListViewModel[j].EmployeeName, new { @readonly = "readonly", Style = "border:0px" })
+                            </td>
+                          
+                            <td>
+                                @Html.TextBoxFor(a => a.EmpGrossSalListViewModel[j].GrossSalary, new { @readonly = "readonly", Style = "border:0px" })
+                            </td>
+                        </tr>
+                        j++;
+                    }
+                    }
+
+                </table>
+
+                <input type="submit" id="btnSubmit" value="Distribute" class="btn btn-success" />
+}
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/Content/plugins/datatables/datatables.js" type="text/javascript"></script>
+    <script src="/Content/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="/Content/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {         
+
+            $('#chkAll').click(function (e) {
+                //var table = $(e.target).closest('table');
+                $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+            });
+        });
+
+
+
+    </script>
+
+}
+
+@section topLevel{
+    @{Html.RenderPartial("_RenderConfirm.Modal"); }
+}
+
+

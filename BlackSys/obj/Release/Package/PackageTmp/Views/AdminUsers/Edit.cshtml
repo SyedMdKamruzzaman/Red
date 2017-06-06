@@ -1,0 +1,99 @@
+﻿@model BlackSys.Models.EditUserViewModel
+@{
+    ViewBag.Title = "Update User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";   
+}
+<h3 class="page-title">
+    User Administration Area
+    <small> Security</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Edit User Info</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+               @using (Html.BeginForm("Edit", "AdminUsers", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>@Html.ValidationSummary("", new { @class = "text-error" })
+                        </div>
+
+                        <div class="form-group form-md-line-input has-info">
+                            @Html.LabelFor(m => m.Email, null, new { @class = "control-label col-md-2", @placeholder = "myemail@mywebsite.com" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-md-line-input has-info">
+                            @Html.LabelFor(model => model.Address, null, new { @class = "control-label col-md-2", @placeholder = "password" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="form-group  form-md-line-input has-info">
+                            @Html.LabelFor(model => model.State, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-md-line-input has-info">
+                            @Html.LabelFor(model => model.PostalCode, new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+                                <div class="form-control-focus"> </div>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group form-md-line-input has-info">
+                            <label class="control-label col-md-2">
+                                Select the Roles
+                            </label>
+                            <div class="col-md-10">
+                               @foreach (var item in Model.RolesList)
+                               {
+                                    <input type="radio" name="selectedRole" value="@item.Value" checked="@item.Selected" class="icheck" 
+                                           data-checkbox="icheckbox_square-blue" />
+                                    @Html.Label(item.Value, new { @class = "control-label" });
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-2 col-md-10">
+                                @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                <input type="submit" class="btn btn-primary" value="Save" />
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

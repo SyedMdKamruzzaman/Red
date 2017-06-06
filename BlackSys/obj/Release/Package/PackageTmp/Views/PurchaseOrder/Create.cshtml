@@ -1,0 +1,222 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.PurchaseOrder
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">
+   Purchase Order Area :
+    <small> Create New Purchase Order</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "PurchaseOrder", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Purchase" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary("", new { @class = "text-error" })
+                       
+
+                        <div class="form-group  margin-top-20">
+
+                            
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ReqID, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ReqID, new { @class = "form-control" })
+                                        <span class="input-group-btn" style="width:0;padding-left:10px">
+                                            <button type="button" id="btnSearchReq" class="btn btn-warning">Search</button>
+                                        </span>
+                                        <div class="form-control-focus"> </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Requisition Date", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.RequisitionDate, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Product", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.HiddenFor(model => model.Item)
+                                    @Html.TextBoxFor(model => model.product, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Specification", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.Specification, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Branch", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.HiddenFor(model => model.BranchID)
+                                    @Html.TextBoxFor(model => model.branch, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Remarks", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.Label("Approval Remarks", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.ApprovalRemarks, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Approval Qty", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.ApprovalQuantity, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Purchase Qty", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                           <div class="form-group">
+                                @Html.LabelFor(model => model.UnitId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.UnitId, new SelectList(ViewBag.unitname, "Id", "Name"), new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Unit Price", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Total Amount", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.SubTotal, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Supplier", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.VendorId, new SelectList(ViewBag.VendorNameList, "ID", "CompanyName"), new { @class = "form-control" })
+                                    <span class="input-group-btn" style="width:0;">
+                                        <a href="/Vendor/Create" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                                            <i class="fa fa-plus-circle"></i> Create Vendor
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Purchase Date", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.PurchaseDate)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              
+                                <div class="col-md-5">
+                                    @Html.CheckBoxFor(model => model.IsChecked)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-5">     
+                                                                        
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#btnSearchReq').click(function () {
+                var reqId = $("#ReqID").val();
+                if (reqId != null)
+                    {
+                    window.location = "/PurchaseOrder/SearchRequisition?ReqID=" + reqId;
+                }
+                else
+                {
+                    TempData["ResultMessage"] = "The data not Found, Check Req ID is Correct or not";
+                    TempData["ResultType"] = "S";
+                }
+            });
+            $('#UnitPrice').change(function () {
+
+                var uprice = $("#UnitPrice").val();
+                var aqty = $("#Quantity").val();
+                var totalprice = uprice * aqty;
+                $("#SubTotal").val(totalprice);
+            });
+           
+        });
+       
+
+    </script>
+}
+

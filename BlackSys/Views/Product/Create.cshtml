@@ -1,0 +1,135 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.ProductModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    BlackSysEntities db = new BlackSysEntities();
+    ViewBag.unit = db.UnitModels.ToList();
+}
+@Styles.Render("~/Content/jquerytoken")
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating New Product</span>
+                </div>
+                <div class="actions">                   
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                    </div>
+               
+                </div>
+            </div>
+            <div class="portlet-body form">             
+                @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Product" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+
+                        <div class="form-group  margin-top-10">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" style="background-color:orange; color:#fff; padding-left:25px;"> Search Product :</label> 
+                                <div class="col-md-5">
+                                    <input type="text" id="productid" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.categoryid, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.categoryid, new { @class = "form-control" })
+                                        <span class="input-group-btn" style="width:0;">
+                                            <a href="/RequisitionItemCategory/Create" class="btn socicon-btn-circle btn-success btn-group-sm" style="margin-right:10px; margin-left:10px;">
+                                                <i class="fa fa-plus-circle"></i> New Category
+                                            </a>
+                                        </span>
+                                    </div>
+            
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.product, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">                                                                         
+                               @Html.TextBoxFor(model => model.product, new { @class = "form-control" })                                                                               
+                                    </div>
+                                </div>
+                           
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ProductDetails, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextAreaFor(model => model.ProductDetails, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Units", new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.UnitId, new SelectList(ViewBag.unit, "Id", "Name"), new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group">
+                                @Html.Label("Product Image", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <input type="file" id="Avatar" name="upload" class=" form-control"/>
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-5">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerytoken")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+            $("#categoryid").tokenInput("@Url.Action("GetCategory", "Product")",
+            {
+                theme: 'facebook',
+                tokenLimit: 1,
+                preventDuplicates: true
+            });
+
+            $("#productid").tokenInput("@Url.Action("GetProduct", "Product")",
+            {
+                theme: 'facebook',
+                tokenLimit: 1,
+                preventDuplicates: true
+            });
+
+        });
+
+    </script>
+}
+

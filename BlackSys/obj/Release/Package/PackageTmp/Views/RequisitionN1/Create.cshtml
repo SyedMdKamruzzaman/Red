@@ -1,0 +1,122 @@
+﻿@model BlackSys.Models.ViewModels.RequisitionN1ViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Approve Requisition</h2>
+@Styles.Render("~/Content/jquerytoken")
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>RequisitionN1ViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequisitionId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RequisitionId)
+                @Html.ValidationMessageFor(model => model.RequisitionId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Item, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Item)
+                @Html.ValidationMessageFor(model => model.Item)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Specification, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Specification)
+                @Html.ValidationMessageFor(model => model.Specification)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity)
+                @Html.ValidationMessageFor(model => model.Quantity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BranchID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.BranchID, new System.Web.Mvc.SelectList(ViewBag.Braches, "BranchId", "BranchName"), "Select Branch", new { @class = "form-control select2-allow-clear" })            
+    @*@Html.EditorFor(model => model.BranchID)*@
+                @Html.ValidationMessageFor(model => model.BranchID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Remarks, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Remarks)
+                @Html.ValidationMessageFor(model => model.Remarks)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApprovalStatus, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ApprovalStatus, new SelectList(Enum.GetValues(typeof(BlackSys.Models.ApprovalStatus))), new { @class = "form-control select2-allow-clear" })  
+                @Html.ValidationMessageFor(model => model.ApprovalStatus)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApprovalQuantity, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApprovalQuantity)
+                @Html.ValidationMessageFor(model => model.ApprovalQuantity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApprovalRemarks, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApprovalRemarks)
+                @Html.ValidationMessageFor(model => model.ApprovalRemarks)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerytoken")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+                $("#Item").tokenInput("@Url.Action("GetRequisitionItem", "Requisition")",
+                {
+                    theme: 'facebook',
+                    tokenLimit: 1,
+                    preventDuplicates: true
+                });
+        });
+
+    </script>
+}
+

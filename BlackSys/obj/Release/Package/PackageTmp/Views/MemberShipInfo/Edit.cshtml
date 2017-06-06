@@ -1,0 +1,180 @@
+﻿@model BlackSys.Models.MembershipInfo
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-pin font-green"></i>
+                <span class="caption-subject bold uppercase">Editing  Membership Info </span>
+            </div>
+            <div class="actions">               
+                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+@using (Html.BeginForm("Edit", "MembershipInfo", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Edit" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    <div class="form-body">
+        @Html.ValidationSummary(true)
+		<div class="form-group  margin-top-20">
+        
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.CardId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CardId, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.CardId)*@
+            </div>
+        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CardTypeId, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.CardTypeId, new SelectList(ViewBag.CardType, "Id", "Type"), "Select Card Type", new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.CardType)*@
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.Discount, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Discount, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.Discount)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.TotalPointAchieved, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.TotalPointAchieved, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.TotalPointAchieved)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.MemberName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.MemberName, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.MemberName)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.MemMobileNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.MemMobileNo, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.MemMobileNo)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.MemEmail, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.MemEmail, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.MemEmail)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.RegistrationDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+               @Html.TextBoxFor(model => model.RegistrationDate, "{0:dd-MMM-yyyy}", new { type = "date", @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.RegistrationDate)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.BirthDate, "{0:dd-MMM-yyyy}", new { type = "date", @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.BirthDate)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.AnniversaryDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AnniversaryDate, "{0:dd-MMM-yyyy}", new { type = "date", @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.AnniversaryDate)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.Address)*@
+            </div>
+        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MemberSourceId, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.MemberSourceId, new SelectList(ViewBag.MemberSource, "Id", "Name"), "Select Member Source", new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.CardType)*@
+                    <div class="form-control-focus"> </div>
+                </div>
+            </div>
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.BranchId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.BranchId, new SelectList(ViewBag.Braches, "BranchId", "BranchName"), new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.BranchId)*@
+            </div>
+        </div>
+
+<div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-10">
+						 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" }) 
+						<input type="submit" value="Update" class="btn btn-success" />
+						</div>
+				</div>
+			</div>
+    </div>
+	</div>
+}
+
+
+            
+    </div>
+</div>
+</div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $("#CardTypeId").change(function () {
+
+            var CardTypeId = $("#CardTypeId").val();
+            var data = {CardTypeId:CardTypeId}
+
+           $.getJSON("/MembershipInfo/GetDiscountByCardId/",data, function (result) {
+
+                $("#Discount").val(result);
+            });
+        });
+
+    </script>
+}

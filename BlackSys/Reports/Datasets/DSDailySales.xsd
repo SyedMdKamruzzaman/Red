@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSDailySales" targetNamespace="http://tempuri.org/DSDailySales.xsd" xmlns:mstns="http://tempuri.org/DSDailySales.xsd" xmlns="http://tempuri.org/DSDailySales.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSDailySales" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSDailySales" msprop:Generator_UserDSName="DSDailySales">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DailySales" msprop:Generator_TableClassName="DailySalesDataTable" msprop:Generator_TableVarName="tableDailySales" msprop:Generator_RowChangedName="DailySalesRowChanged" msprop:Generator_TablePropName="DailySales" msprop:Generator_RowDeletingName="DailySalesRowDeleting" msprop:Generator_RowChangingName="DailySalesRowChanging" msprop:Generator_RowEvHandlerName="DailySalesRowChangeEventHandler" msprop:Generator_RowDeletedName="DailySalesRowDeleted" msprop:Generator_RowClassName="DailySalesRow" msprop:Generator_UserTableName="DailySales" msprop:Generator_RowEvArgName="DailySalesRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AppointmentDate" msprop:Generator_ColumnVarNameInTable="columnAppointmentDate" msprop:Generator_ColumnPropNameInRow="AppointmentDate" msprop:Generator_ColumnPropNameInTable="AppointmentDateColumn" msprop:Generator_UserColumnName="AppointmentDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ServiceName" msdata:Caption="AppointmentDate" msprop:Generator_ColumnVarNameInTable="columnServiceName" msprop:Generator_ColumnPropNameInRow="ServiceName" msprop:Generator_ColumnPropNameInTable="ServiceNameColumn" msprop:Generator_UserColumnName="ServiceName" type="xs:string" minOccurs="0" />
+              <xs:element name="ServiceDate" msdata:Caption="AppointmentDate" msprop:Generator_ColumnVarNameInTable="columnServiceDate" msprop:Generator_ColumnPropNameInRow="ServiceDate" msprop:Generator_ColumnPropNameInTable="ServiceDateColumn" msprop:Generator_UserColumnName="ServiceDate" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalServiceAmount" msdata:Caption="AppointmentDate" msprop:Generator_ColumnVarNameInTable="columnTotalServiceAmount" msprop:Generator_ColumnPropNameInRow="TotalServiceAmount" msprop:Generator_ColumnPropNameInTable="TotalServiceAmountColumn" msprop:Generator_UserColumnName="TotalServiceAmount" type="xs:string" minOccurs="0" />
+              <xs:element name="BranchName" msprop:Generator_ColumnVarNameInTable="columnBranchName" msprop:Generator_ColumnPropNameInRow="BranchName" msprop:Generator_ColumnPropNameInTable="BranchNameColumn" msprop:Generator_UserColumnName="BranchName" type="xs:string" minOccurs="0" />
+              <xs:element name="BookingPayment" msprop:Generator_ColumnVarNameInTable="columnBookingPayment" msprop:Generator_ColumnPropNameInRow="BookingPayment" msprop:Generator_ColumnPropNameInTable="BookingPaymentColumn" msprop:Generator_UserColumnName="BookingPayment" type="xs:string" minOccurs="0" />
+              <xs:element name="AdvancePayment" msprop:Generator_ColumnVarNameInTable="columnAdvancePayment" msprop:Generator_ColumnPropNameInRow="AdvancePayment" msprop:Generator_ColumnPropNameInTable="AdvancePaymentColumn" msprop:Generator_UserColumnName="AdvancePayment" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

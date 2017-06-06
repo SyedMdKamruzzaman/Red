@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3 class="page-title">
+    Dashboard
+    <small>dashboard & statistics</small>
+</h3>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panel-info">
+            <div id="chart_div"></div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="panel panel-info">
+            <div id="chart_div2" style="width:100%; height:300px"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panel-info">
+            <div id="branchwisesales" style="width: 500px; height: 300px;"></div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="panel panel-info">
+            <div id="Incomevsexpenses" style="width:100%; height:300px"></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @*<script type="text/javascript" src="https://www.google.com/jsapi"></script>*@
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            //return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+            return dt.getDate() + "-" + monthNames[(dt.getMonth() + 1)] + "-" + dt.getFullYear();
+        }
+
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        //var today = new Date();
+        //document.getElementById('dtText').innerHTML = "Today's Date is :" + today;
+
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChartBranchWiseSales);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Payment Date');
+            data.addColumn('number', 'Amount');
+
+            // don't forget to add JQuery in your view.
+            $.getJSON("@Url.Action("ServiceWiseSales")", null, function (chartData) {
+                $.each(chartData, function (i, item) {
+
+                    data.addRow([ToJavaScriptDate(item.PaymentDate), item.Value]);
+                });
+
+
+                // Set chart options
+                var options = {
+                    'title': 'Weekly Service Wise Total Sales',
+                    'width': 500,
+                    'height': 300,
+                    legend: { position: 'bottom' },
+                    is3D:true
+                    //title:{ position: 'top'}
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+
+            });
+        }
+
+        function drawChartBranchWiseSales() {
+            // Some raw data (not necessarily accurate)
+            var data = google.visualization.arrayToDataTable([
+             ['Day', 'Banani', 'Mohammadpur', 'Bonorsri'],
+             ['03-Sep', 50, 35, 15],
+             ['04-Sep', 60, 30, 15],
+             ['05-Sep', 60, 30, 10],
+             ['06-Sep', 45, 25, 30],
+             ['07-Sep', 70, 15, 15]
+            ]);
+
+            var options = {
+                'title': 'Branch Wise Weekly Sales Status:',
+                vAxis: { title: 'Sales Ratio%' },
+                hAxis: { title: 'Weekly' },
+                seriesType: 'bars',
+                series: { 5: { type: 'line' } },
+                legend: { position: 'bottom' }
+
+
+            };
+
+
+            var chart = new google.visualization.ComboChart(document.getElementById('chart_div2'));
+            chart.draw(data, options);
+        }
+
+        google.charts.setOnLoadCallback(drawChartforPerformance);
+        function drawChartforPerformance() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Branch Name');
+            data.addColumn('number', 'Amount');
+
+            // don't forget to add JQuery in your view.
+            $.getJSON("@Url.Action("BranchWiseSales")", null, function (chartData) {
+                $.each(chartData, function (i, item) {
+
+                    data.addRow([(item.BranchName), item.Value]);
+                });
+
+
+                // Set chart options
+                var options = {
+                    'title': 'Branch Wise Total Sales last 7 days :',
+                    'width': 500,
+                    'height': 300,
+                    legend: { position: 'bottom' },
+                    is3D: true
+                    //title:{ position: 'top'}
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('branchwisesales'));
+                chart.draw(data, options);
+            });
+            }
+
+
+
+        google.charts.setOnLoadCallback(drawChartProfitExpenses);
+        function drawChartProfitExpenses() {
+            //var data = google.visualization.arrayToDataTable([
+            //  ['Month', 'Sales', 'Expenses'],
+            //  ['APR', 100000, 40000],
+            //  ['MAY', 117000, 46000],
+            //  ['JUN', 66000, 112000],
+            //  ['JUL', 103000, 54000],
+            //  ['AUG', 104900, 84000],
+            //  ['SEP', 30000, 15000]
+
+            //]);
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'category');
+            data.addColumn('number', 'Amount');
+
+
+            // don't forget to add JQuery in your view.
+            $.getJSON("@Url.Action("IncomeVsExpenses")", null, function (chartData) {
+                $.each(chartData, function (i, item) {
+
+                    data.addRow([(item.category), (item.Value)]);
+                });
+
+
+
+                // Set chart options
+                var options = {
+                    'title': 'Income VS Expenses Comparison on last 31 days for all Branch :',
+                    'width': 500,
+                    'height': 300,
+                    legend: { position: 'bottom' },
+                    is3D: true
+                    //title:{ position: 'top'}
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('Incomevsexpenses'));
+                chart.draw(data, options);
+            });
+        }
+    </script>
+}
+
+
+
+
+
+
+
+

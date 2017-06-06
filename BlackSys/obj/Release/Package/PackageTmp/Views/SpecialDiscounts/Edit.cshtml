@@ -1,0 +1,87 @@
+﻿@model BlackSys.Models.SpecialDiscount
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">Edit
+<small></small>
+</h3>
+
+<div class="row">
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-pin font-green"></i>
+                <span class="caption-subject bold uppercase">Creating new SpecialDiscount </span>
+            </div>
+            <div class="actions">               
+                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+@using (Html.BeginForm("Create", "SpecialDiscount", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Edit" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-body">
+        @Html.ValidationSummary(true)
+		<div class="form-group  margin-top-20">
+        @Html.HiddenFor(model => model.Id)
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.DiscountName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.DiscountName, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.DiscountName)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.AllowSpecialDiscount, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AllowSpecialDiscount, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.AllowSpecialDiscount)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.DiscountValue, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.DiscountValue, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.DiscountValue)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.IsHappyHour, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.IsHappyHour, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.IsHappyHour)*@
+            </div>
+        </div>
+
+<div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-10">
+						 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" }) 
+						<input type="submit" value="Update" class="btn btn-success" />
+						</div>
+				</div>
+			</div>
+    </div>
+	</div>
+}
+
+
+            
+    </div>
+</div>
+</div>
+</div>

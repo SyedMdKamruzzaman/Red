@@ -1,0 +1,91 @@
+﻿@using BlackSys.Helpers
+@model IEnumerable<BlackSys.Models.ViewModels.PurchaseOrderViewModel>
+
+@{
+    ViewBag.Title = "PurchaseOrderIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PurchaseOrderIndex</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreatePurchaseOrder")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchaseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequisitionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PurchaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Specification)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.branch)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.ApprovalQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApprovalRemarks)
+        </th>
+        <th>Options</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequisitionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Specification)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.branch)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.ApprovalQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApprovalRemarks)
+        </td>
+       <td>
+        @using (Html.BeginForm("EditPurchaseOrder", "Requisition", FormMethod.Post, new { @id = "notificationForm" }))
+{
+            @Html.AntiForgeryToken()
+    <div class="input-group-btn" style="@(item.PurchaseID == 0 ? "display:block" : "display:none")">
+        
+        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Edit", "EditPurchaseOrder", "Requisition", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+
+    </div>
+            <div class="input-group-btn" style="@(item.ApprovalQuantity != item.Quantity ? "display:block" : "display:none")">
+        
+        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Edit", "EditPurchaseOrder", "Requisition", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+
+    </div>
+}
+    </td>
+    </tr>
+}
+
+</table>

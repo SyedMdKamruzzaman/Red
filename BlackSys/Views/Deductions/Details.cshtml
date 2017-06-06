@@ -1,0 +1,67 @@
+﻿@model BlackSys.Models.Deduction
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Deduction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DeductionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeductionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeductionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeductionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeductionCategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeductionCategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeductionType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeductionType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsManageBySystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsManageBySystem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPartOfGrossSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPartOfGrossSalary)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

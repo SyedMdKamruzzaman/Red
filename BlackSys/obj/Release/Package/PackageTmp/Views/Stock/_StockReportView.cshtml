@@ -1,0 +1,10 @@
+﻿@using ReportViewerForMvc;
+
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@HtmlHelperExtensions.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)

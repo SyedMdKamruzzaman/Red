@@ -1,0 +1,81 @@
+﻿@model BlackSys.Models.Card
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 class="page-title">
+    Card Area
+    <small> Create Membership Card Type for Customer</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "Card", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Card" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary("", new { @class = "text-error" })
+
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group form-md-line-input has-info">
+                                @Html.LabelFor(model => model.CardId, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.CardId, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.CardId)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CardType, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-4">
+                                    @Html.EnumDropDownListFor(model => model.CardType, htmlAttributes: new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.CardType)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CardDiscount, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.CardDiscount, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.CardDiscount)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

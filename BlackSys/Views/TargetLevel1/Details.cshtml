@@ -1,0 +1,106 @@
+﻿@model BlackSys.Models.TargetLevel1
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">Details
+<small></small>
+</h3>
+
+
+<div class="row">
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-pin font-green"></i>
+                <span class="caption-subject bold uppercase">TargetLevel1</span>
+            </div>
+            <div class="actions">               
+                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">    
+    <div class="form-body">		
+	<div class="form-group  margin-top-20">
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpireDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpireDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfDays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfDays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssignBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssignTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+	<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TargetLevel1Id }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" }) 
+</p>

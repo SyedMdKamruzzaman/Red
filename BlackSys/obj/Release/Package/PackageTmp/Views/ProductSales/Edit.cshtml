@@ -1,0 +1,114 @@
+﻿@model BlackSys.Models.ProductSales
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">Edit
+<small></small>
+</h3>
+
+<div class="row">
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-pin font-green"></i>
+                <span class="caption-subject bold uppercase">Creating new ProductSales </span>
+            </div>
+            <div class="actions">               
+                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+@using (Html.BeginForm("Create", "ProductSales", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Edit" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-body">
+        @Html.ValidationSummary(true)
+		<div class="form-group  margin-top-20">
+        @Html.HiddenFor(model => model.Id)
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.AccountsCategoryId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AccountsCategoryId, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.AccountsCategoryId)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.ItemId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ItemId, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.ItemId)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.Quantity, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.Quantity)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.UnitId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.UnitId, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.UnitId)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.UnitPrice, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.UnitPrice)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.SubTotal, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.SubTotal, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.SubTotal)*@
+            </div>
+        </div>
+
+         <div class="form-group form-md-line-input has-info">
+            @Html.LabelFor(model => model.SalesDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.SalesDate, new { @class = "form-control" })
+                <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.SalesDate)*@
+            </div>
+        </div>
+
+<div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-10">
+						 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" }) 
+						<input type="submit" value="Update" class="btn btn-success" />
+						</div>
+				</div>
+			</div>
+    </div>
+	</div>
+}
+
+
+            
+    </div>
+</div>
+</div>
+</div>

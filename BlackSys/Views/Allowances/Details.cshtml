@@ -1,0 +1,67 @@
+﻿@model BlackSys.Models.Allowance
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Allowance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowanceID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowanceID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowanceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowanceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowanceCategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowanceCategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowanceType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowanceType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsManageBySystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsManageBySystem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPartOfGrossSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPartOfGrossSalary)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,196 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.StockInModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/jquerytoken")
+<h3 class="page-title">
+    Stock In Area :
+    <small> Create New Stock In Details</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "StockIn", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create StockIn" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+
+
+                        <div class="form-group  margin-top-20">
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ReqID, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ReqID, new { @class = "form-control" })
+                                        <span class="input-group-btn" style="width:0;padding-left:10px">
+                                            <button type="button" id="btnSearchReq" class="btn btn-warning">Search</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.productid, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            @Html.HiddenFor(model => model.productid)
+                                            @Html.TextBoxFor(model => model.product, new { @class = "form-control" })
+                                        </div>
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.stocktakedate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.stocktakedate, new { @class = "form-control", type = "date" })
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.quantity, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.quantity, new { @class = "form-control" })
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.branchid, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @Html.HiddenFor(model => model.branchid)
+                                        @Html.TextBoxFor(model => model.branch, new { @class = "form-control" })
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.invoiceno, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.invoiceno, new { @class = "form-control" })
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.condition, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @*@Html.DropDownList("condition", new SelectList(Enum.GetValues(typeof(BlackSys.Models.StockInModel.conditionlist))), "Select Condition", new { @class = "form-control" })*@
+                                        @Html.DropDownList("condition", new SelectList(ViewBag.condition, "ID", "ConditionName"), new { @class = "form-control", @readonly = "readonly" })
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.remarks, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @Html.TextAreaFor(model => model.remarks, new { @class = "form-control" })
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.UnitID, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-5">
+                                        @Html.HiddenFor(model => model.UnitID)
+                                        @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control" })
+                                        
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-offset-2 col-md-5">
+                                            @*<a href="/StockIn/Index" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                            <i class="fa fa-arrow-left"></i> Back To List
+                        </a>*@
+                                            @*@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })*@
+                                            <input type="submit" class="btn btn-primary" value="Save" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                    </div>
+                
+            </div>
+                }
+        </div>
+    </div>
+</div>
+    </div>
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerytoken")
+
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+
+
+                $("#categoryid").tokenInput("@Url.Action("GetRequisitionItemCategory", "StockIn")",
+                {
+                    theme: 'facebook',
+                    tokenLimit: 1,
+                    preventDuplicates: true
+                });
+
+                $("#productid").tokenInput("@Url.Action("GetProduct", "StockIn")",
+                {
+                    theme: 'facebook',
+                    tokenLimit: 1,
+                    preventDuplicates: true
+                });
+
+               
+            });
+
+    </script>
+}*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#btnSearchReq').click(function () {
+                var reqId = $("#ReqID").val();
+                if (reqId != null)
+                    {
+                    window.location = "/StockIn/SearchRequisition?ReqID=" + reqId;
+                }
+                else
+                {
+                    TempData["ResultMessage"] = "The data not Found, Check Req ID is Correct or not";
+                    TempData["ResultType"] = "S";
+                }
+            });
+            $('#UnitPrice').change(function () {
+
+                var uprice = $("#UnitPrice").val();
+                var aqty = $("#Quantity").val();
+                var totalprice = uprice * aqty;
+                $("#SubTotal").val(totalprice);
+            });
+
+        });
+
+
+    </script>
+    }

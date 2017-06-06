@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSDailySalesServiceWise" targetNamespace="http://tempuri.org/DSDailySalesServiceWise.xsd" xmlns:mstns="http://tempuri.org/DSDailySalesServiceWise.xsd" xmlns="http://tempuri.org/DSDailySalesServiceWise.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSDailySalesServiceWise" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSDailySalesServiceWise" msprop:Generator_UserDSName="DSDailySalesServiceWise">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DailySalesServiceWise" msprop:Generator_TableClassName="DailySalesServiceWiseDataTable" msprop:Generator_TableVarName="tableDailySalesServiceWise" msprop:Generator_RowChangedName="DailySalesServiceWiseRowChanged" msprop:Generator_TablePropName="DailySalesServiceWise" msprop:Generator_RowDeletingName="DailySalesServiceWiseRowDeleting" msprop:Generator_RowChangingName="DailySalesServiceWiseRowChanging" msprop:Generator_RowEvHandlerName="DailySalesServiceWiseRowChangeEventHandler" msprop:Generator_RowDeletedName="DailySalesServiceWiseRowDeleted" msprop:Generator_RowClassName="DailySalesServiceWiseRow" msprop:Generator_UserTableName="DailySalesServiceWise" msprop:Generator_RowEvArgName="DailySalesServiceWiseRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AppointmentDate" msprop:Generator_ColumnVarNameInTable="columnAppointmentDate" msprop:Generator_ColumnPropNameInRow="AppointmentDate" msprop:Generator_ColumnPropNameInTable="AppointmentDateColumn" msprop:Generator_UserColumnName="AppointmentDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ServiceDate" msprop:Generator_ColumnVarNameInTable="columnServiceDate" msprop:Generator_ColumnPropNameInRow="ServiceDate" msprop:Generator_ColumnPropNameInTable="ServiceDateColumn" msprop:Generator_UserColumnName="ServiceDate" type="xs:string" minOccurs="0" />
+              <xs:element name="ServiceName" msprop:Generator_ColumnVarNameInTable="columnServiceName" msprop:Generator_ColumnPropNameInRow="ServiceName" msprop:Generator_ColumnPropNameInTable="ServiceNameColumn" msprop:Generator_UserColumnName="ServiceName" type="xs:string" minOccurs="0" />
+              <xs:element name="ServiceRate" msprop:Generator_ColumnVarNameInTable="columnServiceRate" msprop:Generator_ColumnPropNameInRow="ServiceRate" msprop:Generator_ColumnPropNameInTable="ServiceRateColumn" msprop:Generator_UserColumnName="ServiceRate" type="xs:string" minOccurs="0" />
+              <xs:element name="BookingPayment" msprop:Generator_ColumnVarNameInTable="columnBookingPayment" msprop:Generator_ColumnPropNameInRow="BookingPayment" msprop:Generator_ColumnPropNameInTable="BookingPaymentColumn" msprop:Generator_UserColumnName="BookingPayment" type="xs:string" minOccurs="0" />
+              <xs:element name="AdvancePayment" msprop:Generator_ColumnVarNameInTable="columnAdvancePayment" msprop:Generator_ColumnPropNameInRow="AdvancePayment" msprop:Generator_ColumnPropNameInTable="AdvancePaymentColumn" msprop:Generator_UserColumnName="AdvancePayment" type="xs:string" minOccurs="0" />
+              <xs:element name="Beautician" msprop:Generator_ColumnVarNameInTable="columnBeautician" msprop:Generator_ColumnPropNameInRow="Beautician" msprop:Generator_ColumnPropNameInTable="BeauticianColumn" msprop:Generator_UserColumnName="Beautician" type="xs:string" minOccurs="0" />
+              <xs:element name="BranchName" msprop:Generator_ColumnVarNameInTable="columnBranchName" msprop:Generator_ColumnPropNameInRow="BranchName" msprop:Generator_ColumnPropNameInTable="BranchNameColumn" msprop:Generator_UserColumnName="BranchName" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalDiscount" msprop:Generator_ColumnVarNameInTable="columnTotalDiscount" msprop:Generator_ColumnPropNameInRow="TotalDiscount" msprop:Generator_ColumnPropNameInTable="TotalDiscountColumn" msprop:Generator_UserColumnName="TotalDiscount" type="xs:string" minOccurs="0" />
+              <xs:element name="OrderID" msprop:Generator_ColumnVarNameInTable="columnOrderID" msprop:Generator_ColumnPropNameInRow="OrderID" msprop:Generator_ColumnPropNameInTable="OrderIDColumn" msprop:Generator_UserColumnName="OrderID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

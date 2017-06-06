@@ -1,0 +1,83 @@
+﻿@model BlackSys.Models.Stock
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Stock</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.categoryid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoryid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.productid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.productid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stocktakedate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stocktakedate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.branchid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.branchid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.invoiceno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.invoiceno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.condition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.condition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.remarks)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.stockid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

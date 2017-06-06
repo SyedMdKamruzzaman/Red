@@ -1,0 +1,147 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.Transaction
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Daily Expenses </span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("GeneralExpCreate", "Transaction", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Transaction" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.Date)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CategoryID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                   @Html.DropDownListFor(model => model.CategoryID, new System.Web.Mvc.SelectList(ViewBag.Category, "ID", "category"), new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.Category)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SubCategoryID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.SubCategoryID, new System.Web.Mvc.SelectList(ViewBag.SubCategory, "Id", "SubCategoryName"), new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.Category)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AccountsName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.AccountsName, new System.Web.Mvc.SelectList(ViewBag.Accounts, "ID", "AccountsName"), new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.AccountsName)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CreditDebitFlag, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    <select name="CreditDebitFlag" class="form-control">
+                                        @*<option value="C">Credit</option>*@
+                                        <option value="D">Debit</option>                                    
+                                    </select>
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Amount, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.Amount, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Amount)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Remarks, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Remarks)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                @Html.LabelFor(model => model.AppointmentID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.AppointmentID, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Remarks)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>*@
+
+                           
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-5">
+                                        @*<a href="/Transaction/Index" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                                            <i class="fa fa-arrow-left"></i> Back To List
+                                        </a>*@
+                                        @*@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })*@
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+
+
+                @*$("#AccountsName").tokenInput("@Url.Action("GetAccountName", "Transaction")",
+                {
+                    theme: 'facebook',
+                    tokenLimit: 1,
+                    preventDuplicates: true
+                });*@
+
+                $("#Date").val(Get2Date());
+
+            });
+
+    </script>
+}
+

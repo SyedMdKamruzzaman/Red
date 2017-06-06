@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+@using BlackSys.Models
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+
+        @Html.AntiForgeryToken()
+        <li class="dropdown dropdown-user">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                @*<img alt="" class="img-circle" src="~/Content/template/layout/img/avatar3_small.jpg" />*@
+                @*username-hide-on-mobile*@
+                <span> @User.Identity.GetUserName() </span>
+                <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-default">
+                <li>
+                    @using (Html.BeginForm("Profile", "Employee", FormMethod.Post, new { @id = "Details" }))
+{
+    <a href="javascript:document.getElementById('Details').submit()">
+        <span class="icon-user"></span>Profile
+    </a>
+}
+                </li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        <i class="icon-key"></i> Log Out
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+    }
+}
+else
+{
+    <!--
+        <li class="dropdown dropdown-user">@*Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@</li>
+    -->
+    <li class="dropdown dropdown-user">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}

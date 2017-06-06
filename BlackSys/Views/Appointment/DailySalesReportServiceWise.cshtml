@@ -1,0 +1,124 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.Transaction
+@{
+    ViewBag.Title = "Daily Sales Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Styles.Render("~/Content/jquerytoken")
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Daily Sales Report Service & Beautician Wise</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("DailySalesReportServiceWise", "Appointment", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "StockReport", target = "_blank" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-body">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group  margin-top-20">
+                            <div class="form-group has-info">
+                                @Html.Label("Start Date", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <input type="date" id="StartDate" name="StartDate" class="form-control" />
+                                    <div class="form-control-focus"> </div>
+                                    @*@Html.ValidationMessageFor(model => model.categoryid)*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("End Date", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <input type="date" id="EndDate" name="EndDate" class="form-control" />
+                                    <div class="form-control-focus"> </div>
+                                    @*@Html.ValidationMessageFor(model => model.productid)*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("ServiceId", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <input type="text" id="ServiceId" name="ServiceId" class="form-control" />
+                                    <div class="form-control-focus"> </div>
+                                    @*@Html.ValidationMessageFor(model => model.stocktakedate)*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("BeauticianId", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    <input type="text" id="BeauticianId" name="BeauticianId" class="form-control" />
+                                    <div class="form-control-focus"> </div>
+                                   
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                @Html.Label("Branch", new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownList("BranchId", new SelectList(ViewBag.Braches, "BranchId", "BranchName"),"Select Branch", new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                    @*@Html.ValidationMessageFor(model => model.quantity)*@
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Show Report" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerytoken")
+    <script type="text/javascript">
+
+        $("#ServiceId").tokenInput("@Url.Action("GetAuthors", "Appointment")",
+        {
+            theme: 'facebook',
+            tokenLimit: 1,
+            preventDuplicates: true
+        });
+
+
+
+        $("#BeauticianId").tokenInput("@Url.Action("GetBeautician", "Appointment")",
+        {
+        theme: 'facebook',
+        tokenLimit:1,
+        preventDuplicates: true
+        });
+
+    </script>
+}
+
+
+
+

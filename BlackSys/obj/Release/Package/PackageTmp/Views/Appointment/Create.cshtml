@@ -1,0 +1,1353 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.ViewModels.AppointmentViewModel
+@using BlackSys
+@using Microsoft.AspNet.Identity
+@using System.Web.Configuration
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/JqueryToken/token-input-facebook.css" rel="stylesheet" type="text/css" />
+    CommonRepository commonRepository = new CommonRepository();
+    BlackSysEntities db = new BlackSysEntities();
+    ViewBag.PaymentTerms = commonRepository.GetPaymentTermsList();
+    ViewBag.SpecialDiscount = commonRepository.GetSpecialDiscountList();
+    var userId = User.Identity.GetUserId();
+    var branchId = db.AspNetUsers.Where(u => u.Id == userId).Select(p => p.BranchId).FirstOrDefault();
+    ViewBag.Braches = CommonRepository.GetBranchList(userId);
+    ViewBag.PaymentTermsCreditId = WebConfigurationManager.AppSettings["PaymentTermsCreditId"];
+
+}
+
+
+@Styles.Render("~/Content/jquerytoken")
+@Styles.Render("~/Content/tabs")
+
+<div id="parentHorizontalTab">
+    <ul class="resp-tabs-list hor_1">
+        <li data-tab-name="Appointment"><i class="fa fa-user"></i> Appointment</li>
+        <li id="order_service" data-tab-name="Order"><i class="fa fa-tasks"></i>Order</li>
+        <li id="order_payment" data-tab-name="Payment"><i class="fa fa-money"></i>Payment</li>
+        <li id="order_report" data-tab-name="Report"><i class="fa fa-dashboard"></i> Report</li>
+    </ul>
+
+    <div class="resp-tabs-container hor_1">
+
+        @*<h2 class="title_contanier">Appointment</h2>*@
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-pin font-green"></i>
+                            <span class="caption-subject bold uppercase">Creating new Appointment</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+
+                        @using (Html.BeginForm("Create", "Appointment", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-body">
+                                @Html.ValidationSummary()
+
+                                <div class="form-group  margin-top-20">
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.AppointmentDate, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @*@{ Html.EnableClientValidation(false); }*@
+                                                    @Html.TextBoxFor(model => model.Appointments.AppointmentDate, "{dd-MM-yyyy}", new { type = "date", @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Appointments.AppointmentDate)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.MemberId, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        @Html.TextBoxFor(model => model.Appointments.MemberId, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Appointments.MemberId)
+
+                                                        <span class="input-group-btn" style="width:0;padding-left:10px">
+                                                            <button type="button" id="btnAddCustomer" class="btn btn-warning" style="margin-right:10px;">Add Customer</button>
+                                                            <button type="button" id="btnAddMember" class="btn btn-success">Add Member</button>
+                                                        </span>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.Services, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @Html.TextAreaFor(model => model.Appointments.Services, new { @class = "form-control" })
+                                                    @Html.HiddenFor(model => model.Appointments.ServicesID)
+                                                    @Html.ValidationMessageFor(model => model.Appointments.Services)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.TotalServicesAmount, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Appointments.TotalServicesAmount, new { @class = "form-control", readOnly = "readonly" })
+                                                    @*<a href="#" id="aCalculateTotal">Calculate</a>*@
+                                                    @Html.ValidationMessageFor(model => model.Appointments.TotalServicesAmount)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.AdvancePayment, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Appointments.AdvancePayment, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Appointments.AdvancePayment)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.ServiceDate, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @Html.EditorFor(model => model.Appointments.ServiceDate, new { htmlAttributes = new { @class = "form-control", @DataFormatString = "{0:dd/MM/yyyy}" } })
+                                                    @Html.ValidationMessageFor(model => model.Appointments.ServiceDate)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.Venue, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Appointments.Venue, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Appointments.Venue)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Appointments.BranchId, new { @class = "col-md-3 control-label" })
+                                                <div class="col-md-4">
+                                                    @Html.DropDownListFor(model => model.Appointments.BranchId, new SelectList(ViewBag.Braches, "BranchId", "BranchName"), new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Appointments.BranchId)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <div class="col-md-3 control-label"></div>
+                                                <div class="col-md-4">
+                                                    <input type="submit" id="btnSubmit" value="Create" class="btn btn-success btn-block" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group" style="margin-top:8px;">
+                                            <div class="col-md-offset-2 col-md-3">
+                                                <input type="submit" id="btnSubmit" value="Create" class="btn btn-success btn-block" />
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-user"></i>Appointment List
+                            </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"> </a>
+                                <a href="javascript:;" class="fullscreen"> </a>
+                            </div>
+
+                        </div>
+                        <div class="portlet-body">
+                            <table class="table table-striped table-bordered table-hover dt-responsive" id="sys-table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Service Date
+                                        </th>
+                                        <th>
+                                            Order No
+                                        </th>
+                                        <th>
+                                            Full Name
+                                        </th>
+                                        <th>
+                                            Mobile
+                                        </th>
+                                        <th>
+                                            Service Amount
+                                        </th>
+                                        <th>
+                                            Booking Amount
+                                        </th>
+
+                                        <th>
+                                            Paid Amount
+                                        </th>
+                                        <th>
+                                            Discount Amount
+                                        </th>
+                                        <th>
+                                            Due Amount
+                                        </th>
+                                        <th>Order</th>
+                                        <th>Cancel</th>
+                                        <th>Completed</th>
+                                    </tr>
+                                </thead>
+
+                                @foreach (var item in Model.AppointmentList)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ServiceDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BookingID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MemberName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MemMobileNo)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TotalServicesAmount)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AdvancePayment)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PaidAmount)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TotalDiscountAmount)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TotalDueAmount)
+                                        </td>
+                                        <td>
+
+
+                                            @Html.AntiForgeryToken()
+                                            <button data-url='@Url.Action("Create", "Appointment", new { id = item.BookingID })'
+                                                    class="order btn btn-success btn-sm" data-toggle="tooltip" title="Order">
+                                                <span class='glyphicon glyphicon-scissors'></span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button data-url='@Url.Action("Cancel", "Appointment", new { id = item.BookingID })'
+                                                    class="cancel btn btn-danger btn-sm" data-toggle="tooltip" title="Cancel">
+                                                <span class='glyphicon glyphicon-remove'></span>
+                                            </button>
+
+                                        </td>
+                                        <td>
+                                            <button data-url='@Url.Action("Done", "Appointment", new { id = item.BookingID })'
+                                                    class="done btn btn-info btn-sm" data-toggle="tooltip" title="Completed">
+                                                <span class='glyphicon glyphicon-check'></span>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+        @*<div>
+            <h2 class="title_contanier">Order</h2>*@
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-user"></i>Order
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                            <a href="javascript:;" class="fullscreen"> </a>
+                        </div>
+                        <div class="actions">
+                            <div class="inputs pull-right">
+                                <a href="/MemberShipInfo/Index" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                                    <i class="fa fa-search-circle"></i> Membership
+                                </a>
+                            </div>
+                            @*<div class="inputs pull-right">
+                                    @using (Html.BeginForm())
+                                    {
+                                    <div class="portlet-input input-inline input-medium">
+                                        <div class="input-group">
+                                            @Html.TextBox("Search", null, new { @class = "form-control input-circle-left", @placeholder = "Search", @title = "Search" })
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-circle-right btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                            {
+                            @Html.AntiForgeryToken()
+                            <div style="padding-bottom:8px">
+                                <input type="submit" value="Add New" id="btnAddNew" class="btn btn-success" />
+                            </div>
+                            <table class="table table-striped table-bordered table-hover dt-responsive" id="systable" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Order ID
+                                        </th>
+                                        <th>
+                                            Job ID
+                                        </th>
+                                        <th>
+                                            Service
+                                        </th>
+                                        <th>
+                                            Service Rate
+                                        </th>
+                                        <th>
+                                            Service Date
+                                        </th>
+                                        <th>
+                                            Beautician
+                                        </th>
+                                        <th>
+                                            Special Sale
+                                        </th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                @if (Model.OrderDetailsList != null && Model.OrderDetailsList.Count > 0)
+                                                        {
+                                                            int j = 0;
+                                                            foreach (var item in Model.OrderDetailsList)
+                                                            {
+                                                        <tbody id="tblOrderbody">
+                                                            <tr style="border:1px solid black">
+                                                                <td style="width:auto">@Html.EditorFor(a => a.OrderDetailsList[j].BookingID)</td>
+                                                                <td>@Html.EditorFor(a => a.OrderDetailsList[j].JobID)</td>
+                                                                <td>@Html.EditorFor(a => a.OrderDetailsList[j].Service)</td>
+                                                                <td>@Html.EditorFor(a => a.OrderDetailsList[j].ServiceRate)</td>
+                                                                <td>@Html.EditorFor(a => a.OrderDetailsList[j].ServiceDate)</td>
+                                                                <td>@Html.DropDownListFor(a => a.OrderDetailsList[j].Beautician, new SelectList("jewel", "jewel"))</td>
+                                                                <td>@Html.DropDownListFor(a => a.OrderDetailsList[j].SpecialSaleBeauticinId, new SelectList("jewel", "jewel"))</td>
+                                                                <td>
+                                                                    @if (j > 0)
+                                                                            {
+                                                                            <a id="rmv" href="#" class="remove">Remove</a>
+                                                                            }
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+
+
+                                                            }
+
+                                                        }
+
+                            </table>
+
+                            <input type="submit" id="btnSubmit1" value="Update Order" class="btn btn-success" />
+                            }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<h2 class="title_contanier">
+            Payment</h2*@
+        <div class="row" ng-app="RedApp" ng-controller="RedController">
+            <div class="col-md-12">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-pin"></i>
+                            <span class="caption-subject bold uppercase">Payment</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="form-body">
+                        @using (Html.BeginForm("CreateServicePayment", "Appointment", FormMethod.Post, new { target = "_blank" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary()
+
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.ServicePayment.OrderID, new { @class = "control-label col-md-3" })*@
+                                <label style="color:forestgreen" class="control-label col-md-3">Order ID</label>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ServicePayment.OrderID, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ServicePayment.OrderID)
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnOk" class="btn btn-warning">Find</button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Total service amount</label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.TotalServiceAmount, new { @class = "form-control", id = "ServicePayment_TotalServiceAmount", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.TotalServiceAmount)
+
+                                            </div>
+                                        </div>
+                                        @*ng_model = "totalServiceAmount"*@
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.BookingPayment, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.BookingPayment, new { @class = "form-control", id = "ServicePayment_BookingPayment", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.BookingPayment)
+
+                                            </div>
+                                        </div>
+                                        @*ng_model = "BookingPayment"*@
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.MemberCardID, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.MemberCardID, new { @class = "form-control", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.MemberCardID)
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.CardType, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.CardType, new { @class = "form-control", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.CardType)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.CardDiscount, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.CardDiscount, new { @class = "form-control", id = "ServicePayment_CardDiscount", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.CardDiscount)
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.CardDiscountAmount, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.CardDiscountAmount, new { @class = "form-control", id = "ServicePayment_CardDiscountAmount", readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.CardDiscount)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.SpecialDiscountId, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.DropDownListFor(model => model.ServicePayment.SpecialDiscountId, new SelectList(ViewBag.SpecialDiscount, "Id", "DiscountName"), "Select Special Discount", new { @class = "form-control" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.SpecialDiscountPer, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.SpecialDiscountPer, new { @class = "form-control", id = "SpecialDiscountPer", @readonly = "readonly" })
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.SpecialDiscountAmount, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.SpecialDiscountAmount, new { @class = "form-control", id = "SpecialDiscountAmount", @readonly = "readonly" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.TotalDiscount, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.TotalDiscount, new { @class = "form-control", id = "ServicePayment_TotalDiscount", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.TotalDiscount)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.PayableAmount, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.PayableAmount, new { @class = "form-control", id = "ServicePayment_PayableAmount", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.PayableAmount)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.AdvancePayment, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.AdvancePayment, new { @class = "form-control", id = "ServicePayment_AdvancePayment", @readOnly = "readOnly" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.AdvancePayment)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label style="color:forestgreen" class="control-label col-md-3">Pay Amount</label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.PayAmount, new { @class = "form-control", id = "ServicePayment_PayAmount", style = "color:blue; font-size:20px" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.AdvancePayment)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ServicePayment.Due, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.Due, new { @class = "form-control", id = "ServicePayment_Due", @readOnly = "readOnly", style = "color:blue; font-size:20px" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.Due)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @*@Html.LabelFor(model => model.ServicePayment.PaymentTermsId, new { @class = "control-label col-md-3" })*@
+                                            <label style="color:forestgreen;" class="control-label col-md-3">Payment Term</label>
+                                            <div class="col-md-3">
+                                                @Html.DropDownListFor(model => model.ServicePayment.PaymentTermsId, new SelectList(ViewBag.PaymentTerms, "Id", "PaymentTermsName"), "Select Payment Terms", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.PaymentTermsId)
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="divCreditCard">
+                                            @Html.LabelFor(model => model.ServicePayment.CreditCardNo, new { @class = "control-label col-md-3", @id = "ServicePayment_CreditCardNoLabel" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.CreditCardNo, new { @class = "form-control", style = "color:blue; font-size:20px" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @*@Html.LabelFor(model => model.ServicePayment.SlipNo, new { @class = "control-label col-md-3" })*@
+                                            <label style="color:forestgreen;" class="control-label col-md-3">Slip No</label>
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.SlipNo, new { @class = "form-control", style = "color:red" })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.SlipNo)
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @*@Html.LabelFor(model => model.ServicePayment.PaymentDate, new { @class = "control-label col-md-3" })*@
+                                            <label style="color:forestgreen;" class="control-label col-md-3">Payment Date</label>
+                                            <div class="col-md-3">
+                                                @Html.EditorFor(model => model.ServicePayment.PaymentDate, new { htmlAttributes = new { @class = "form-control", @DataFormatString = "{0:dd/MM/yyyy}" } })
+                                                @Html.ValidationMessageFor(model => model.ServicePayment.PaymentDate)
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group" style="visibility:hidden">
+                                            @Html.LabelFor(model => model.ServicePayment.SpecialDiscount, new { @class = "control-label col-md-3" })
+                                            <div class="col-md-3">
+                                                @Html.TextBoxFor(model => model.ServicePayment.SpecialDiscount, new { @class = "form-control", id = "ServicePayment_SpecialDiscount" })
+                                                @*@Html.ValidationMessageFor(model => model.ServicePayment.SpecialDiscount)*@
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-10 col-md-2">
+                                                <input type="submit" value="Create" class="btn btn-success btn-lg" />
+                                            </div>
+                                        </div>
+
+
+                        }
+
+                        @*@using (Html.BeginForm("Report", "Appointment", FormMethod.Post, new { target = "_blank" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-3">
+                                    <input type="text" class="form-control" placeholder="Order Id" name="orderId" id="orderId" style="visibility:hidden" />                                   
+                                    <input type="submit" id="btnShowReport" value="Show" class="btn btn-info" />
+                                </div>
+                            </div>
+                        }*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @*<h2 class="title_contanier">Report</h2>*@
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-user"></i>Print Money Recites
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse"> </a>
+                            <a href="javascript:;" class="fullscreen"> </a>
+                        </div>
+
+                        <div class="inputs pull-right">
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="portlet-body">
+                    <div class="form-body">
+                        @using (Html.BeginForm("Report", "Appointment", FormMethod.Post, new { target = "_blank" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Write Order No : </label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" placeholder="Order Id" name="orderId" id="orderId" />
+                                    <input type="submit" id="btnShowReport" value="Show" class="btn btn-info" />
+                                </div>
+
+                            </div>
+
+                                @*<div class="form-group">
+                                    <div class="col-md-offset-10 col-md-2" style="margin-top:10px">
+                                        <input type="submit" id="btnShowReport" value="Show" class="btn btn-info" />
+                                    </div>
+                                </div>*@
+
+                        }
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/Content/plugins/datatables/datatables.min.js"></script>
+    <script src="~/Content/plugins/datatables/datatables.all.min.js"></script>
+    <script src="/Content/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerytoken")
+    @Scripts.Render("~/bundles/tabs")
+    @Scripts.Render("~/bundles/angularJS")
+
+    <script src="~/Scripts/JQueryToken/jquery.tokeninput.js"></script>
+
+    <script type="text/javascript">
+
+
+
+        jQuery.noConflict()(function ($) {
+            $(document).ready(function () {
+
+                $('#parentHorizontalTab').easyResponsiveTabs({
+                    type: 'default', //Types: default, vertical, accordion
+                    width: 'auto', //auto or any width like 600px
+                    fit: true, // 100% fit in a container
+                    tabidentify: 'hor_1', // The tab groups identifier
+                    activate: function (event) { // Callback function if tab is switched
+                        var $tab = $(this);
+                        var $info = $('#nested-tabInfo');
+                        var $name = $('span', $info);
+                        $name.text($tab.text());
+                        $info.show();
+                    }
+                });
+
+            });
+
+        });
+
+
+        jQuery.noConflict()(function ($) {
+            $(document).ready(function () {
+
+                //$("#ServicePayment_CreditCardNo").hide();
+                //$("#ServicePayment_CreditCardNoLabel").hide();
+                $("#divCreditCard").hide();
+
+                $("#ServicePayment_PaymentTermsId").change(function () {
+
+
+
+                    var paymentTermsId = $("#ServicePayment_PaymentTermsId").val();
+
+
+
+                    if (parseInt(paymentTermsId) == parseInt(@ViewBag.PaymentTermsCreditId)) {
+                        //$("#ServicePayment_CreditCardNo").show();
+                        //$("#ServicePayment_CreditCardNoLabel").show();
+                        $("#divCreditCard").show();
+                        $("#divCreditCard").val(0);
+                    }
+                    else {
+                        //$("#ServicePayment_CreditCardNo").hide();
+                        //$("#ServicePayment_CreditCardNoLabel").hide();
+                        $("#divCreditCard").hide();
+                        $("#divCreditCard").val(0);
+                    }
+                });
+
+                $(@ViewBag.toTrigger).trigger("click");
+
+                var today = new Date();
+
+
+                var intDay = today.getDate();
+                var strDay = "";
+                if (parseInt(intDay) < 10) {
+                    strDay = "0" + intDay.toString();
+                }
+
+                var intMonth = today.getMonth() + 1;
+                var strMonth = "";
+                if (parseInt(intMonth) < 10) {
+                    strMonth = "0" + intMonth.toString();
+                }
+
+                var finalDate = today.getFullYear().toString() + "-" + strMonth + "-" + strDay;
+
+                $('#Appointments_AppointmentDate').val(finalDate);
+
+                $('#Appointments_ServiceDate').val(finalDate);
+
+                $('#btnAddNew').hide();
+                $('#systable').hide();
+                $('#btnSubmit1').hide();
+
+                $("#Appointments_MemberId").tokenInput("@Url.Action("GetMember", "Appointment")",
+            {
+                theme: 'facebook',
+                tokenLimit: 1,
+                preventDuplicates: true
+            });
+
+
+
+
+
+
+
+                $("#Appointments_Services").tokenInput("@Url.Action("GetAuthors", "Appointment")",
+                {
+                    theme: 'facebook',
+                    preventDuplicates: true
+                });
+
+                //$("#ServicePayment_OrderID").change(function () {
+                //    var sid = $("#ServicePayment_OrderID").val();
+
+                //    $("#orderid").val(sid);
+                //});
+
+                $("#btnSubmit").click(function () {
+                    var selectedValues = $('#Appointments_Services').tokenInput("get");
+                    var servicesList;
+                    for (i = 0; i < selectedValues.length; i++) {
+
+                        if (i == 0) {
+                            servicesList = selectedValues[i].id;
+                        }
+                        else {
+                            servicesList += ',' + selectedValues[i].id;
+                        }
+
+                    }
+
+                    $("#Appointments_ServicesID").val(servicesList);
+
+
+                });
+
+
+                $('#token-input-Appointments_Services').blur(function () {
+                    var selectedValues = $('#Appointments_Services').tokenInput("get");
+                    var servicesList;
+                    for (i = 0; i < selectedValues.length; i++) {
+
+                        if (i == 0) {
+                            servicesList = selectedValues[i].id;
+                        }
+                        else {
+                            servicesList += ',' + selectedValues[i].id;
+                        }
+
+                    }
+
+                    $.get("/Appointment/GetTotalPrice/" + servicesList, function (data) {
+
+                        $("#Appointments_TotalServicesAmount").val(data);
+                    });
+                });
+
+
+
+
+
+
+
+                function ToJavaScriptDate(value) {
+                    var pattern = /Date\(([^)]+)\)/;
+                    var results = pattern.exec(value);
+                    var dt = new Date(parseFloat(results[1]));
+                    var intMonth = dt.getMonth() + 1;
+                    var strMonth = "";
+                    if (parseInt(intMonth) < 10) {
+                        strMonth = "0" + intMonth.toString();
+                    }
+
+                    return dt.getFullYear() + "-" + strMonth + "-" + dt.getDate();
+
+                }
+
+                var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                // monthNames[(dt.getMonth() + 1)]
+
+
+                $('.cancel').click(function (e) {
+
+                    if (confirm('Are you sure you want to cancel this appointment?')) {
+
+                        $.get($(this).data('url'), function (data) {
+
+                            alert(data);
+                            window.location = "/Appointment/Create";
+
+                        });
+                    }
+                    else { return false; }
+                });
+
+                $('.done').click(function (e) {
+
+                    if (confirm('Are you sure, This Order is Completed?')) {
+
+                        $.get($(this).data('url'), function (data) {
+
+                            alert(data);
+                            window.location = "/Appointment/Create";
+
+                        });
+                    }
+                    else { return false; }
+                });
+
+
+                $('.order').click(function (e) {
+
+                    $.get($(this).data('url'), function (data) {
+
+
+                        $("#order_service").trigger("click");
+
+                        $('#btnAddNew').show();
+                        $('#systable').show();
+                        $('#btnSubmit1').show();
+
+                        //$('#systable > tbody > tr:nth-child(n+2)').remove();
+
+                        $('#systable').find('tbody').remove();
+
+                        var tr;
+                        for (var i = 0; i < data.OrderDetailsList.length; i++) {
+
+                            tr = $('<tr>');
+
+                            tr.append("<td style='display:none' >" + data.OrderDetailsList[i].ID + "</td>");
+                            tr.append("<td><span name='OrderDetailsList[" + i + "].BookingID'>" + data.OrderDetailsList[i].BookingID + "</span></td>");
+                            tr.append("<td><input type='text' readonly='true' style='width:20px;border:none' name='OrderDetailsList[" + i + "].JobID' value='" + data.OrderDetailsList[i].JobID + "'/></td>");
+                            tr.append("<td style='display:none' ><input type='text' id='RowServiceID' name='OrderDetailsList[" + i + "].ServiceID' value='" + data.OrderDetailsList[i].ServiceID + "'/></td>");
+                            tr.append("<td><input type='text' style='width:280px;border-radius:4px;height:30px;border: 1px solid #cccccc;' id='order_new_service' name='OrderDetailsList[" + i + "].ServiceName' class='servicename' value='" + data.OrderDetailsList[i].ServiceName + "'/></td>");
+                            tr.append("<td><input type='text' readonly='true' style='width:80px;border:none' id='ServiceRate' name='OrderDetailsList[" + i + "].ServiceRate' value='" + data.OrderDetailsList[i].ServiceRate + "'/></td>");
+                            tr.append("<td><input type='date' name='OrderDetailsList[" + i + "].ServiceDate' value='" + ToJavaScriptDate(data.OrderDetailsList[i].ServiceDate) + "'></td>");
+
+
+                            var listItems = "";
+
+                            var beautician = data.OrderDetailsList[i].Beautician;
+
+                            listItems = "<select class='form-control' name='OrderDetailsList[" + i + "].BeauticianId'>";
+                            for (var j = 0; j < data.BeauticianList.length; j++) {
+                                var employeeID = data.BeauticianList[j].ID;
+                                listItems += "<option ";
+                                if (employeeID == beautician) {
+                                    listItems += " selected='true' ";
+                                }
+                                listItems += " value='" + data.BeauticianList[j].ID + "'>" + data.BeauticianList[j].Name + "</option>";
+                            }
+                            listItems += "</select>";
+                            tr.append("<td >" + listItems + "</td>");
+
+                            listItems = "";
+
+                            var SpecialSaleBeauticinId = data.OrderDetailsList[i].SpecialSaleBeauticinId;
+
+                            listItems = "<select class='form-control' name='OrderDetailsList[" + i + "].SpecialSaleBeauticinId'>";
+                            listItems += "<option value='0'>Select Special Sale</option>";
+                            for (var j = 0; j < data.BeauticianList.length; j++) {
+                                var employeeID = data.BeauticianList[j].ID;
+                                listItems += "<option ";
+                                if (employeeID == SpecialSaleBeauticinId) {
+                                    listItems += " selected='true' ";
+                                }
+                                listItems += " value='" + data.BeauticianList[j].ID + "'>" + data.BeauticianList[j].Name + "</option>";
+                            }
+                            listItems += "</select>";
+                            tr.append("<td >" + listItems + "</td></tr>");
+
+                            tr.append("<td></td>")
+                            $('#systable').append(tr);
+                        }
+
+                    });
+
+                });
+                //e.preventDefault();
+                //e.stopPropagation();
+
+
+
+                $("#btnSubmit1").click(function () {
+
+                    var toUpdateID, orderId, JobId, ServiceId, ServiceRate, ServiceDate, toUpdateBeautician, toUpdateSpecialSaleBeautician;
+                    var i = 0;
+                    $('#systable tr td:first-child').each(function () {
+                        if (i == 0) {
+                            toUpdateID = $(this).text();
+                        }
+                        else {
+                            toUpdateID += "," + $(this).text();
+                        }
+                        i++;
+                    });
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(2)').each(function () {
+                        if (i == 0) {
+                            orderId = $(this).text();
+                        }
+                    });
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(3)').each(function () {
+                        if (i == 0) {
+                            JobId = $(this).find('input[type="text"]').val();
+                        }
+                        else {
+                            JobId += "," + $(this).find('input[type="text"]').val();
+                        }
+                        i++;
+                    });
+
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(4)').each(function () {
+                        if (i == 0) {
+                            ServiceId = $(this).find('input[type="text"]').val();
+                        }
+                        else {
+                            ServiceId += "," + $(this).find('input[type="text"]').val();
+                        }
+                        i++;
+                    });
+
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(6)').each(function () {
+                        if (i == 0) {
+                            ServiceRate = $(this).find('input[type="text"]').val();
+                        }
+                        else {
+                            ServiceRate += "," + $(this).find('input[type="text"]').val();
+                        }
+                        i++;
+                    });
+
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(7)').each(function () {
+                        if (i == 0) {
+                            ServiceDate = $(this).find('input[type="date"]').val();
+                        }
+                        else {
+                            ServiceDate += "," + $(this).find('input[type="date"]').val();
+                        }
+                        i++;
+                    });
+
+
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(8)').each(function () {
+                        if (i == 0) {
+                            toUpdateBeautician = $(this).find("select").val();
+                        }
+                        else {
+                            toUpdateBeautician += "," + $(this).find("select").val();
+                        }
+                        i++;
+                    });
+
+
+                    i = 0;
+
+                    $('#systable tr td:nth-child(9)').each(function () {
+                        if (i == 0) {
+                            toUpdateSpecialSaleBeautician = $(this).find("select").val();
+                        }
+                        else {
+                            toUpdateSpecialSaleBeautician += "," + $(this).find("select").val();
+                        }
+                        i++;
+                    });
+
+                    var form = $('#__AjaxAntiForgeryForm');
+                    var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                    $.ajax({
+                        url: '/Appointment/UpdateBeautician',
+                        type: 'POST',
+                        data: { __RequestVerificationToken: token, 'ids': toUpdateID, 'orderIds': orderId, 'jobIds': JobId, 'serviceIds': ServiceId, 'serviceRates': ServiceRate, 'serviceDates': ServiceDate, 'beauticians': toUpdateBeautician, 'SpecialSaleBeauticians': toUpdateSpecialSaleBeautician },
+                        success: function (result) {
+                            alert(result);
+                            $("#order_payment").trigger("click");
+
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+
+
+                    return false;
+
+                });
+
+                $('#btnAddMember').click(function () {
+                    window.location = "/MemberShipInfo/CreateMember";
+                });
+
+
+
+                $('#btnAddCustomer').click(function () {
+                    window.location = "/MemberShipInfo/CreateCustomer";
+                });
+
+                $('#btnOk').click(function () {
+
+
+                    var orderId = $("#ServicePayment_OrderID").val();
+                    //$("#orderid").val(orderId);
+                    $.ajax({
+                        url: '/Appointment/GetTotalPriceAndBookingPayment/',
+                        type: 'GET',
+                        data: { 'id': orderId },
+                        success: function (data) {
+
+                            if (data.TotalServiceAmount == undefined)
+                            { location.reload(); }
+                            else
+                            {
+                                $("#ServicePayment_TotalServiceAmount").val(data.TotalServiceAmount);
+                                $("#ServicePayment_BookingPayment").val(data.BookingPayment);
+                                $("#ServicePayment_MemberCardID").val(data.MemberCardID);
+                                $("#ServicePayment_CardType").val(data.CardType);
+                                $("#ServicePayment_CardDiscount").val(data.CardDiscount);
+                                $("#ServicePayment_CardDiscountAmount").val(data.CardDiscountAmount);
+                                $("#SpecialDiscountPer").val(data.SpecialDiscountPer);
+                                $("#SpecialDiscountAmount").val(data.SpecialDiscountAmount);
+                                $("#ServicePayment_TotalDiscount").val(data.TotalDiscount);
+                                $("#ServicePayment_PayableAmount").val(data.PayableAmount);
+                                $("#ServicePayment_AdvancePayment").val(data.AdvancePayment);
+                                $("#ServicePayment_Due").val(data.Due);
+                                $("#ServicePayment_PaymentTerms").val(data.PaymentTerms);
+                                $("#ServicePayment_SlipNo").val(data.SlipNo);
+                            }
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+
+                    //$.get("/Appointment/GetTotalPriceAndBookingPayment/" + orderId, function (data) {
+
+
+                    //});
+
+
+                });
+
+
+                @*$("#ServicePayment_MemberCardID").tokenInput("@Url.Action("GetMemberCardInfo", "Appointment")",
+                 {
+                     theme: 'facebook',
+                     tokenLimit: 1,
+                     preventDuplicates: true
+                 });*@
+
+                //$('#token-input-ServicePayment_MemberCardID').blur(function () {
+                //    var selectedValues = $('#ServicePayment_MemberCardID').tokenInput("get");
+                //    var cardId = selectedValues[0].id;
+
+
+
+                //    $.get("/Appointment/GetCardTypenDiscount/" + cardId, function (data) {
+
+                //        var cardType = ["", "Platinum", "Gold", "Silver", "Bronze"];
+
+                //        // monthNames[(dt.getMonth() + 1)]
+
+                //        $("#ServicePayment_CardType").val(cardType[data[0].CardType]);
+                //        $("#ServicePayment_CardDiscount").val(data[0].CardDiscount);
+                //        $("#ServicePayment_CardDiscount").val(data[0].CardDiscount).trigger('input');
+                //        //$("#ServicePayment_CardDiscountAmount").val([data[0].CardDiscount*totalServiceAmount/100]).trigger('input');
+
+                //        var cardDiscount = document.getElementById('ServicePayment_CardDiscount').value;
+                //        var serviceAmount = document.getElementById('ServicePayment_TotalServiceAmount').value;
+                //        var carddisamt = parseFloat(cardDiscount) * parseFloat(serviceAmount) / 100;
+
+                //        document.getElementById('ServicePayment_CardDiscountAmount').value = carddisamt.toFixed(2);
+
+
+
+                //    });
+
+
+
+                //});
+
+                $('#ServicePayment_SpecialDiscount').blur(function () {
+                    var specialDiscount = document.getElementById('ServicePayment_SpecialDiscount').value;
+                    var carddisamt = document.getElementById('ServicePayment_CardDiscountAmount').value;
+                    var toldisamt = parseFloat(carddisamt) + parseFloat(specialDiscount);
+                    document.getElementById('ServicePayment_TotalDiscount').value = toldisamt.toFixed(2);
+
+                    var totaldiscount = document.getElementById('ServicePayment_TotalDiscount').value;
+                    var bookingpayment = document.getElementById('ServicePayment_BookingPayment').value;
+                    var serviceamount = document.getElementById('ServicePayment_TotalServiceAmount').value;
+                    var payamount = parseFloat(serviceamount) - (parseFloat(bookingpayment) + parseFloat(totaldiscount));
+                    document.getElementById('ServicePayment_PayableAmount').value = payamount.toFixed(2);
+
+                });
+                $('#ServicePayment_PayAmount').blur(function () {
+                    var bookingpayment = document.getElementById('ServicePayment_BookingPayment').value;
+                    var payment = document.getElementById('ServicePayment_AdvancePayment').value;
+                    var payablemount = document.getElementById('ServicePayment_PayableAmount').value;
+                    var payamount = document.getElementById('ServicePayment_PayAmount').value;
+
+                    var due = parseFloat(payablemount) - parseFloat(payment) - parseFloat(payamount);
+                    //ServicePayment_AdvancePayment
+                    document.getElementById('ServicePayment_Due').value = due.toFixed(2);
+                });
+
+
+                //1. Add new row
+                $("#btnAddNew").click(function (e) {
+                    e.preventDefault();
+                    var $tableBody = $("#systable");
+                    var $trLast = $tableBody.find("tr:last");
+                    var $trNew = $trLast.clone();
+                    var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                    $trNew.find("td:last").html('<a href="#" class="remove" >Remove</a>');
+                    $.each($trNew.find(':input'), function (i, val) {
+                        // Replaced Name
+                        var oldN = $(this).attr('name');
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        $(this).attr('name', newN);
+
+                        //if ($(this).attr('type') == 'date')
+                        //{
+                        //    var dateVal = $(this).attr('value');
+                        //    $(this).val(dateVal);
+                        //}
+
+                        if (oldN.indexOf("JobID") >= 0) {
+                            var presentValue = $trNew.find(':input:first').attr('value');
+                            presentValue = parseInt(presentValue) + 1;
+                            $(this).attr('value', presentValue);
+                        }
+                        //Replaced value
+                        //var type = $(this).attr('type');
+                        //if (type.toLowerCase() == "text") {
+                        //    $(this).attr('value', '');
+                        //}
+
+                        // If you have another Type then replace with default value
+                        $(this).removeClass("input-validation-error");
+
+                    });
+                    $trLast.after($trNew);
+
+                    // Re-assign Validation
+                    var form = $("form")
+                        .removeData("validator")
+                        .removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse(form);
+                });
+
+                // 2. Remove
+                $(document).on('click', 'a.remove', function (e) {
+                    e.preventDefault();
+                    $(this).parent().parent().remove();
+                });
+
+
+                $(document).on("focus", ".servicename", function () {
+
+                    $(this).tokenInput("@Url.Action("GetAuthors", "Appointment")",
+                      {
+                          theme: 'facebook',
+                          tokenLimit: 1,
+                          preventDuplicates: true
+                      });
+
+                });
+
+
+
+
+                $(document).on('blur', '.jewel', function () {
+
+
+                    var selectedValues = $(this).closest('td').find(".servicename").tokenInput("get");
+                    var serviceId = selectedValues[0].id;
+
+                    var $row = $(this).parents("tr");
+
+                    $row.find('input[id="RowServiceID"]').val(serviceId);
+
+
+                    if (serviceId != null) {
+                        $.get("/Appointment/GetServiceRateById/" + serviceId, function (data) {
+
+                            $row.find('input[id="ServiceRate"]').val(data);
+                        });
+                    }
+                });
+
+
+                $("#ServicePayment_SpecialDiscountId").change(function () {
+                    var SpecialDiscountId = $("#ServicePayment_SpecialDiscountId").val();
+                    var ServicePaymentOrderId = $("#ServicePayment_OrderID").val();
+
+                    if (SpecialDiscountId != "" && SpecialDiscountId != null && SpecialDiscountId != 'undefined' && ServicePaymentOrderId != null && ServicePaymentOrderId != 'undefined' && ServicePaymentOrderId != "") {
+                        var data = { 'SpecialDiscount': SpecialDiscountId, 'ServicePaymentOrder': ServicePaymentOrderId }
+
+                        $.getJSON("/ServicePayment/GetSpecialDiscountById/", data, function (result) {
+
+                            //alert("Your Discount Amount is: " + result);
+                            $("#SpecialDiscountPer").val(result);
+                            $("#SpecialDiscountAmount").val((result / 100) * $("#ServicePayment_TotalServiceAmount").val())
+                            var totalserviceamt = $("#ServicePayment_TotalServiceAmount").val();
+                            var bookingamt = $("#ServicePayment_BookingPayment").val();
+                            var carddiscountamt = $("#ServicePayment_CardDiscountAmount").val();
+                            var advpayment = $("#ServicePayment_AdvancePayment").val();
+                            var specialdiscountamt = $("#SpecialDiscountAmount").val();
+                            if (specialdiscountamt > 0) {
+                                $("#ServicePayment_PayableAmount").val(totalserviceamt - bookingamt - advpayment - specialdiscountamt);
+                                $("#ServicePayment_TotalDiscount").val(specialdiscountamt);
+
+                            }
+
+                        });
+                    }
+                    else {
+                        var totalserviceamt = $("#ServicePayment_TotalServiceAmount").val();
+                        var bookingamt = $("#ServicePayment_BookingPayment").val();
+                        var carddiscountamt = $("#ServicePayment_CardDiscountAmount").val();
+                        var advpayment = $("#ServicePayment_AdvancePayment").val();
+
+                        $("#ServicePayment_PayableAmount").val(totalserviceamt - bookingamt - advpayment - carddiscountamt);
+                        $("#ServicePayment_TotalDiscount").val(carddiscountamt);
+                        $("#SpecialDiscountPer").val("");
+                        $("#SpecialDiscountAmount").val("");
+                    }
+                });
+
+
+            });
+        });
+
+    </script>
+}

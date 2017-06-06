@@ -1,0 +1,184 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.StockOutModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+@Styles.Render("~/Content/jquerytoken")
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Stock Out</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "StockOut", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create StockOut" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+
+                        <div class="form-group  margin-top-20">
+
+                            @*<div class="form-group">
+        @Html.LabelFor(model => model.categoryid, new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.categoryid, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-control-focus"> </div>
+        </div>
+    </div>*@
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.productid, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.productid, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.stockoutdate, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.stockoutdate, new { @class = "form-control", type="date" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="control-label col-md-2">
+                                    Available Quantity
+                                </div>
+                                <div class="col-md-5">
+                                    <strong> <label id="lblAvailableQty" class="form-control"></label></strong>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.quantity, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.quantity, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.branchid, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.DropDownListFor(model => model.branchid, new SelectList(ViewBag.Braches, "BranchId", "BranchName"), new { @class = "form-control", @readonly = "readonly" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.depid, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.depid, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.empid, new { @class = "control-label col-md-2" })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.empid, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-5">
+                                        <a href="/StockIn/Index" class="btn btn-circle btn-default btn-group-lg" style="margin-right:10px; margin-left:10px;">
+                                            <i class="fa fa-arrow-left"></i> Back To Current Stock
+                                        </a>
+                                        @*@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })*@
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerytoken")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+            $("#empid").tokenInput("@Url.Action("GetEmployee", "StockOut")",
+            {
+                theme: 'facebook',
+                tokenLimit: 1,
+                preventDuplicates: true
+            });
+
+            $("#depid").tokenInput("@Url.Action("GetDepartment", "StockOut")",
+           {
+               theme: 'facebook',
+               tokenLimit: 1,
+               preventDuplicates: true
+           });
+
+            $("#productid").tokenInput("@Url.Action("GetProduct/5", "StockOut")",
+            {
+                theme: 'facebook',
+                tokenLimit: 1,
+                preventDuplicates: true
+            });
+
+
+            $("#categoryid").tokenInput("@Url.Action("GetCategory", "StockOut")",
+           {
+               theme: 'facebook',
+               tokenLimit: 1,
+               preventDuplicates: true
+           });
+
+            $('#token-input-productid').blur(function () {
+
+                
+
+
+                var selectedValues = $('#productid').tokenInput("get");
+                var productId = selectedValues[0].id;
+
+
+
+                $.get("/StockOut/GetAvailableQty/"+ productId, function (data) {
+
+                    $("#lblAvailableQty").text(data["quantity"]);
+
+
+
+
+                });
+
+
+
+            });
+
+        });
+
+    </script>
+}

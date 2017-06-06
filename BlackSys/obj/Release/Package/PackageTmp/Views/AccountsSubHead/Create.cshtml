@@ -1,0 +1,81 @@
+﻿@model BlackSys.Models.AccountsSubHead
+
+@{
+    ViewBag.Title = "Create Acount Sub Head";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 class="page-title">
+    Accounts Area
+    <small> Accounts Sub Head</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new Account Sub Head</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "AccountsSubHead", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Acount Sub Head" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary("", new { @class = "text-error" })
+
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CategoryID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.CategoryID, new System.Web.Mvc.SelectList(ViewBag.category, "ID", "category"), "Select Category", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.Category)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SubCategoryID, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.SubCategoryID, new System.Web.Mvc.SelectList(ViewBag.SubCategory, "ID", "SubCategoryName"), "Select Sub Category", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.Category)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AccountsName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.AccountsName, new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.AccountsName)*@
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

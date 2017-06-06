@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="jewel100-001-site1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^E:\\Project\\BlackSys\\BlackSys\\BlackSys\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^E:\\Project\\BlackSys\\BlackSys\\BlackSys\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="BlackSysConnection-Web.config Connection String" description="" value="Data Source=SQL5030.Smarterasp.net;Initial Catalog=DB_A14656_jewel100;User ID=DB_A14656_jewel100_admin;Password=jewel123;MultipleActiveResultSets=True" tags="">
+    <parameterEntry kind="XmlFile" scope="E:\\Project\\BlackSys\\BlackSys\\BlackSys\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlackSysConnection']/@connectionString" />
+  </parameter>
+</parameters>

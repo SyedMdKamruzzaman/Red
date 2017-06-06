@@ -1,0 +1,97 @@
+﻿@model BlackSys.Models.Shift
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Shift</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftInTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftInTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MercyTimeIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MercyTimeIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftOutTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftOutTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MercyTimeOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MercyTimeOut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EffectiveDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpireDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpireDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

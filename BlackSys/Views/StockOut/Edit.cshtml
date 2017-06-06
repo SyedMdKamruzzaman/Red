@@ -1,0 +1,86 @@
+﻿@model BlackSys.Models.StockOutModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>StockOutModel</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.stockoutid)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.categoryid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.categoryid)
+                @Html.ValidationMessageFor(model => model.categoryid)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.productid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.productid)
+                @Html.ValidationMessageFor(model => model.productid)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.stockoutdate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.stockoutdate)
+                @Html.ValidationMessageFor(model => model.stockoutdate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.quantity, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.quantity)
+                @Html.ValidationMessageFor(model => model.quantity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.branchid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.branchid)
+                @Html.ValidationMessageFor(model => model.branchid)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.depid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.depid)
+                @Html.ValidationMessageFor(model => model.depid)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.empid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.empid)
+                @Html.ValidationMessageFor(model => model.empid)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

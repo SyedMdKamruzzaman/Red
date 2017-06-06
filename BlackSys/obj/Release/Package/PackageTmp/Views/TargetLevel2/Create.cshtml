@@ -1,0 +1,173 @@
+﻿@using BlackSys.Helpers
+@model BlackSys.Models.TargetLevel2
+@using BlackSys
+@using Microsoft.AspNet.Identity
+@using System.Web.Configuration
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    CommonRepository commonRepository = new CommonRepository();
+    BlackSysEntities db = new BlackSysEntities();
+    var userId = User.Identity.GetUserId();
+    var branchId = db.AspNetUsers.Where(u => u.Id == userId).Select(p => p.BranchId).FirstOrDefault();
+    ViewBag.Braches = CommonRepository.GetBranchList(userId);
+    var fi = Convert.ToInt16(WebConfigurationManager.AppSettings["TargetLevel1DesignationIdForFI"]);
+    var sp = Convert.ToInt16(WebConfigurationManager.AppSettings["TargetLevel2DepartmentIDForSP"]);
+    //var sp = db.Employees.Where(x => x.BranchID == branchId).FirstOrDefault();
+    ViewBag.FI = db.Employees.Where(x => x.DesignationtID == fi).ToList();
+    ViewBag.SP = db.Employees.Where(x => x.DeptID == sp).ToList();
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase"><input type="text" id="TargetMonth" readonly="readonly" style="border:none; background:none; width:100%" /></span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "TargetLevel2", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-body">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group  margin-top-20">
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.BranchId, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Branch</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.BranchId, new System.Web.Mvc.SelectList(ViewBag.Braches, "BranchId", "BranchName"), "Select Branch", new { @class = "form-control select1-allow-clear" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.BranchId)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.TargetDate, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Target StartDate</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.TargetDate, new { @class = "form-control", type = "date", @id = "TargetDate" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.TargetDate)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.ExpireDate, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Target End Date</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ExpireDate, new { @class = "form-control", type = "date", @id = "ExpireDate" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.ExpireDate)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.AssignBy, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Target Assign By</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.AssignBy, new System.Web.Mvc.SelectList(ViewBag.FI, "EmpID", "EmpName"), "Select Supervisor", new { @class = "form-control select2-allow-clear" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.AssignBy)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.AssignTo, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Target Assign To</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.AssignTo, new System.Web.Mvc.SelectList(ViewBag.SP, "EmpID", "EmpName"), "Select Floor Incharge", new { @class = "form-control select2-allow-clear" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.AssignTo)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.TargetAmount, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Target Amount</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.TargetAmount, new { @class = "form-control" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.TargetAmount)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.NumberOfDays, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Total Days</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.NumberOfDays, new { @class = "form-control", @id = "NumberOfDays",  @readOnly="readonly" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.NumberOfDays)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Active ?</label>
+                                <div class="col-md-4">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "icheckbox_square-blue" })
+                                    <div class="form-control-focus"> </div>
+                                    @Html.ValidationMessageFor(model => model.IsActive)
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success" })
+                                        <input type="submit" value="Create" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+
+    $('#ExpireDate').change(function () {
+        var oneDay = 24 * 60 * 60 * 1000;
+        var startdate = $("#TargetDate").val();
+        var enddate = $("#ExpireDate").val();
+        var sdate = new Date(startdate);
+        var edate = new Date(enddate);
+        var numberOfDays = Math.round(Math.abs((sdate.getTime() - edate.getTime()) / (oneDay)));
+        $("#NumberOfDays").val(numberOfDays);
+
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+        ];
+        var d = new Date(startdate);
+        var targetmonth = ("TARGET FOR:  " + monthNames[d.getMonth()].toUpperCase());
+        $("#TargetMonth").val(targetmonth);
+
+    });
+    $('#TargetDate').change(function () {
+        var oneDay = 24 * 60 * 60 * 1000;
+        var startdate = $("#TargetDate").val();
+        var enddate = $("#ExpireDate").val();
+        var sdate = new Date(startdate);
+        var edate = new Date(enddate);
+        var numberOfDays = Math.round(Math.abs((sdate.getTime() - edate.getTime()) / (oneDay)));
+        $("#NumberOfDays").val(numberOfDays);
+    });
+
+
+
+    </script>
+}

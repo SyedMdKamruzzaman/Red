@@ -1,0 +1,132 @@
+﻿
+@model BlackSys.Models.MembershipInfo
+
+@{
+    ViewBag.Title = "Create MemberShipCard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">
+   Customer Area
+    <small> Create Customer </small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("CreateCustomer", "MemberShipInfo", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Customer" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemberName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MemberName, new { @class = "form-control", @id = "MemberName" })
+                                    @Html.ValidationMessageFor(model => model.MemberName)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemMobileNo, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MemMobileNo, new { @class = "form-control", @id = "MemMobileNo", maxlength="11", minlength="11" })
+                                    @Html.ValidationMessageFor(model => model.MemMobileNo)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemEmail, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MemEmail, new { @class = "form-control" })
+                               
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MemberSourceId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.MemberSourceId, new SelectList(ViewBag.MemberSource, "Id", "Name"), new { @class = "form-control", @id= "MemberSourceId" })                                 
+                                    @Html.ValidationMessageFor(model => model.MemberSourceId)
+                                      <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+                           
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" id="btnSubmit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                 
+
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnSubmit").click(function () {
+                if ($("#MemberName").val() == "") {
+                    alert("Please Enter Member Name");
+                    $("#MemberName").focus();
+                    return false;
+                }
+
+                if ($("#MemMobileNo").val() == "") {
+                    alert("Please Enter Valid Mobile Number");
+                    $("#MemMobileNo").focus();
+                    return false;
+                }
+
+                if ($("#MemMobileNo").val().length > 11 ) {
+                    alert("Please Enter 11 Digit Mobile Number");
+                    $("#MemMobileNo").focus();
+                    return false;
+                }
+
+
+
+                //if ($("#MemberSourceId".val() == "" || "#MemberSourceId".val() == 'NULL')) {
+                //    alert("Please Select Memeber Source");
+                //    return false;
+                //}
+
+            });
+
+        });
+
+
+
+
+
+        </script>
+}

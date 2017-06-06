@@ -1,0 +1,47 @@
+﻿@model List<Dictionary<string, object>>
+        @{
+            Layout = "";
+        }
+        <style type="text/css">
+            body {
+                font-family: Tahoma;
+            }
+
+            h2 {
+                color: red;
+            }
+
+            table {
+                border: 1px solid black;
+                border-spacing: 0;
+            }
+
+            td {
+                color: green;
+                font-size: .8em;
+                padding: 5px;
+            }
+
+            .heading {
+                background: #ccc;
+            }
+        </style>
+
+
+
+        <table class="table table-bordered">
+            @foreach (var row in Model.FirstOrDefault())
+            {
+                <th>@row.Key</th>
+            }
+            @foreach (var row in Model)
+            {
+                <tr>
+                    @foreach (var column in row)
+                    {
+                        <td>@column.Value</td>  }
+                </tr>
+            }
+        </table>
+
+

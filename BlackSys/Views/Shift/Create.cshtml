@@ -1,0 +1,148 @@
+﻿@model BlackSys.Models.Shift
+
+@using BlackSys
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    CommonRepository commonRepository = new CommonRepository();
+    BlackSysEntities db = new BlackSysEntities();
+
+    var userId = User.Identity.GetUserId();
+    var branchId = db.AspNetUsers.Where(u => u.Id == userId).Select(p => p.BranchId).FirstOrDefault();
+    ViewBag.Braches = commonRepository.GetBranchList(userId);
+    ViewBag.EmpList = db.Employees.Where(x => x.BranchID == branchId).Select(x => new { x.EmpID, x.EmpName }).ToList();
+}
+
+<div class="row">
+<div class="col-md-12">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-pin font-green"></i>
+                <span class="caption-subject bold uppercase">Creating new user</span>
+            </div>
+            <div class="actions">               
+                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+@using (Html.BeginForm("Create", "Shift", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-body">
+        @Html.ValidationSummary(true)
+		<div class="form-group  margin-top-20">
+        <div class="form-group">
+            @Html.LabelFor(model => model.BranchID, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @*@Html.TextBoxFor(model => model.BranchID, new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.BranchID, new System.Web.Mvc.SelectList(ViewBag.Braches, "BranchID", "BranchName"), new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@*@Html.ValidationMessageFor(model => model.BranchID)*@
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShiftCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ShiftCode, new { @class = "form-control" })
+               
+				@Html.ValidationMessageFor(model => model.ShiftCode)
+                  <div class="form-control-focus"> </div>
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShiftName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ShiftName, new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.ShiftName)
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShiftInTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ShiftInTime, new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.ShiftInTime)
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.MercyTimeIn, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MercyTimeIn, new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.MercyTimeIn)
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShiftOutTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ShiftOutTime, new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.ShiftOutTime)
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.MercyTimeOut, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MercyTimeOut, new { @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.MercyTimeOut)
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.EffectiveDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.EffectiveDate, new { type="date", @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.EffectiveDate)
+            </div>
+        </div>
+	
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExpireDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ExpireDate, new { type = "date", @class = "form-control" })
+                 <div class="form-control-focus"> </div>
+				@Html.ValidationMessageFor(model => model.ExpireDate)
+            </div>
+        </div>
+	
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-10">
+						 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" }) 
+						<input type="submit" value="Create" class="btn btn-success" />
+						</div>
+				</div>
+			</div>
+    </div>
+	</div>
+}
+
+
+            
+    </div>
+</div>
+</div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#EffectiveDate").val(Get2Date());
+        $("#ExpireDate").val(Get2Date());
+    });
+
+    </script>
+}

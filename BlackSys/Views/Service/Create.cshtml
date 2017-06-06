@@ -1,0 +1,84 @@
+﻿@model BlackSys.Models.Service
+@using BlackSys
+@{
+    ViewBag.Title = "Create Service";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    CommonRepository commonRepository = new CommonRepository();
+    ViewBag.ServiceCategory = commonRepository.GetServiceList();
+}
+
+<h3 class="page-title">
+    Service Area
+<small> Services For Customer</small>
+</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green">
+                    <i class="icon-pin font-green"></i>
+                    <span class="caption-subject bold uppercase">Creating new Service</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "Service", FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "Create Service" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary()
+
+
+                        <div class="form-group  margin-top-20">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ServiceCategory, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.ServiceCategory, new SelectList(ViewBag.ServiceCategory, "categoryid", "category"),"Select Service Category", new { @class = "form-control" })                                    
+                                    @Html.ValidationMessageFor(model => model.ServiceCategory)
+                                     <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ServiceName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ServiceName, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ServiceName)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Price)
+                                    <div class="form-control-focus"> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+                                        <input type="submit" class="btn btn-primary" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

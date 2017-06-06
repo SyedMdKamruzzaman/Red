@@ -1,0 +1,124 @@
+﻿@model IEnumerable<BlackSys.Models.ServicePayment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberCardID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardDiscountAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalServiceAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingPayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecialDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PayableAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdvancePayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPayableAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Due)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentTerms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlipNo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberCardID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardDiscount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardDiscountAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalServiceAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookingPayment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecialDiscount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalDiscount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayableAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdvancePayment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPayableAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Due)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentTerms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlipNo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

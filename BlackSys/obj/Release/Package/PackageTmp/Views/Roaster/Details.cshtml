@@ -1,0 +1,51 @@
+﻿@model BlackSys.Models.Roaster
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Roaster</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BranchID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BranchID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShiftCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShiftCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoasterDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoasterDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RoasterId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
